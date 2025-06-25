@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Manrope";
+  src: url("fonts/Manrope-VariableFont_wght.ttf") format("truetype");
+  font-weight: 300 700;
+}
+
+:root {
+  --font-primary: "Manrope", sans-serif;
+  font-size: 15px;
+
+  --font-weight-bold: 700;
+  --font-weight-medium: 500;
+  --font-weight-regular: 400;
+
+  --font-size-bold-56: 56px;
+  --line-height-bold-56: 58px;
+  --letter-spacing-bold-56: 2px;
+
+  --font-size-bold-40: 40px;
+  --line-height-bold-40: 44px;
+  --letter-spacing-bold-40: 1.5px;
+
+  --font-size-bold-36: 36px;
+  --line-height-bold-36: 40px;
+  --letter-spacing-bold-36: 1.29px;
+
+  --font-size-bold-32: 32px;
+  --line-height-bold-32: 36px;
+  --letter-spacing-bold-32: 1.15px;
+
+  --font-size-bold-28: 28px;
+  --line-height-bold-28: 38px;
+  --letter-spacing-bold-28: 2px;
+
+  --font-size-bold-24: 24px;
+  --line-height-bold-24: 33px;
+  --letter-spacing-bold-24: 1.7px;
+
+  --font-size-bold-18: 18px;
+  --line-height-bold-18: 24px;
+  --letter-spacing-bold-18: 1.3px;
+
+  --font-size-bold-15: 15px;
+  --line-height-bold-15: 25px;
+
+  --font-size-regular-14: 14px;
+  --line-height-regular-14: 19px;
+  --letter-spacing-regular-14: 10px;
+
+  --font-size-bold-13: 13px;
+  --line-height-bold-13: 25px;
+  --letter-spacing-bold-13: 1px;
+
+  --font-size-medium-15: 15px;
+  --line-height-medium-15: 25px;
+
+  --dark-orange: #d87d4a;
+  --orange: #fbaf85;
+  --black: #000000;
+  --light-black: #101010;
+  --dark-gray: #4c4c4c;
+  --gray: #f1f1f1;
+  --snow: #fafafa;
+  --white: #ffffff;
+}
+
+* {
+  /* outline: 1px solid rgb(115, 148, 115); */
+}
+
+body {
+  font-family: var(--font-primary);
+  max-width: 100%;
+  min-height: 100svh;
+  place-items: center;
+}

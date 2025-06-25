@@ -1,0 +1,103 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:app.db"
+}
+
+model Product {
+  id            Int       @id @default(autoincrement())
+  slug          String    @unique
+  name          String
+  new           Boolean
+  price         Int
+  description   String
+  features      String
+  category      Category  @relation(fields: [categoryId], references: [id])
+  categoryId    Int
+  image         ProductImage  @relation(fields: [imageId], references: [id])
+  imageId       Int          @unique
+  categoryImage CategoryImage?
+  gallery       Gallery?
+  includes      IncludeItem[]
+  others        RelatedProduct[]
+
+  @@map("products")
+}
+
+model Category {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  products Product[]
+}
+
+model ProductImage {
+  id        Int     @id @default(autoincrement())
+  mobile    String
+  tablet    String
+  desktop   String
+  product   Product?
+}
+
+model CategoryImage {
+  id        Int     @id @default(autoincrement())
+  mobile    String
+  tablet    String
+  desktop   String
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int     @unique
+}
+
+model Gallery {
+  id        Int        @id @default(autoincrement())
+
+  firstId   Int        @unique
+  first     GallerySet @relation("FirstGallery", fields: [firstId], references: [id])
+
+  secondId  Int        @unique
+  second    GallerySet @relation("SecondGallery", fields: [secondId], references: [id])
+
+  thirdId   Int        @unique
+  third     GallerySet @relation("ThirdGallery", fields: [thirdId], references: [id])
+
+  productId Int        @unique
+  product   Product    @relation(fields: [productId], references: [id])
+}
+
+
+model GallerySet {
+  id      Int    @id @default(autoincrement())
+  mobile  String
+  tablet  String
+  desktop String
+
+  // Optional back-relations, if needed:
+  firstGallery  Gallery? @relation("FirstGallery")
+  secondGallery Gallery? @relation("SecondGallery")
+  thirdGallery  Gallery? @relation("ThirdGallery")
+}
+
+model IncludeItem {
+  id        Int     @id @default(autoincrement())
+  quantity  Int
+  item      String
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int
+}
+
+model RelatedProduct {
+  id           Int     @id @default(autoincrement())
+  slug         String
+  name         String
+  mobile       String
+  tablet       String
+  desktop      String
+  product      Product @relation(fields: [productId], references: [id])
+  productId    Int
+}
