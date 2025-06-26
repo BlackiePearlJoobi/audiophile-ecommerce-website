@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const Categories = () => {
   return (
-    <div className="z-0 px-[24px] pt-[32px] pb-[35px] bg-[var(--white)] flex flex-col gap-[16px] sm:px-[40px] sm:pt-[56px] sm:pb-[67px] sm:flex-row sm:gap-[10px] lg:px-[165px] lg:gap-[30px]">
+    <div className="z-0 px-[24px] pt-[32px] pb-[35px] bg-[var(--white)] flex flex-col gap-[16px] sm:px-[40px] sm:pt-[56px] sm:pb-[67px] sm:flex-row sm:gap-[10px] lg:px-[165px] lg:pb-[95px] lg:gap-[30px]">
       <div className="relative w-full h-[217px] flex flex-col items-center">
         <div className="absolute z-1 bg-[var(--gray)] rounded-[8px] top-[52px] left-0 w-full h-[165px] lg:top-[80px]"></div>
         <Image

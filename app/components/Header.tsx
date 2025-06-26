@@ -1,12 +1,20 @@
+"use client";
+
 import React from "react";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import MobileMenu from "./MobileMenu";
 import Nav from "./Nav";
 
 const Header = () => {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+
   return (
-    <header className="sticky top-0 z-50 h-[89px] px-[24px] py-[32px] bg-[#191919] flex flex-row items-center justify-between sm:px-[40px] sm:justify-start lg:px-[165px]">
+    <header
+      className={`sticky top-0 z-50 h-[89px] px-[24px] py-[32px] ${isHome ? "bg-[#191919]" : "bg-[var(--black)]"} flex flex-row items-center justify-between sm:px-[40px] sm:justify-start lg:px-[165px]`}
+    >
       <div className="lg:hidden">
         <MobileMenu></MobileMenu>
       </div>

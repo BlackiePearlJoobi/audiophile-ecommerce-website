@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const BestGear = () => {
   return (
-    <section className="mx-[24px] mb-[120px] flex flex-col gap-[40px] sm:mx-[40px] sm:my-[96px] sm:gap-[63px] lg:mx-[165px] lg:my-[200px] xl:flex-row-reverse xl:gap-[125px]">
+    <section className="mx-[24px] mb-[120px] flex flex-col gap-[40px] sm:mx-[40px] sm:mb-[96px] sm:gap-[63px] lg:mx-[165px] lg:mb-[200px] xl:flex-row-reverse xl:gap-[125px]">
       <picture>
         <source
           srcSet="/assets/shared/desktop/image-best-gear.jpg"

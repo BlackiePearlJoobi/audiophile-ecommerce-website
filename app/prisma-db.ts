@@ -69,8 +69,10 @@ export async function getProducts() {
       { new: "desc" }, // then place new products first
     ],
     include: {
-      categoryImage: true,
+      // define which relations to include
+      category: true,
       image: true,
+      categoryImage: true,
       gallery: {
         include: {
           first: true,
@@ -80,19 +82,25 @@ export async function getProducts() {
       },
       includes: true,
       others: true,
-      category: true,
     },
   });
 }
 
-export async function getProduct(id: number) {
+export async function getProduct(slug: string) {
   return prisma.product.findUnique({
-    where: { id },
+    where: { slug },
+    include: {
+      category: true,
+      image: true,
+      gallery: true,
+      includes: true,
+      others: true,
+    },
   });
 }
 
 // for URL validation in app/[category]
-export async function generateStaticParams() {
+export async function generateStaticCategoryParams() {
   // target the category table (model Category)
   // select only the name field (ignore id or other fields)
   // return an array like: [{ name: "headphones" }, { name: "speakers" }, { name: "earphones" }]
@@ -107,4 +115,21 @@ export async function generateStaticParams() {
    ]
   */
   return uniqueCategories.map(({ name }) => ({ category: name }));
+}
+
+// for URL validation in app/[category]/[slug]
+export async function generateStaticSlugParams() {
+  const products = await prisma.product.findMany({
+    select: {
+      slug: true,
+      category: {
+        select: { name: true },
+      },
+    },
+  });
+
+  return products.map(({ slug, category }) => ({
+    category: category.name,
+    slug,
+  }));
 }

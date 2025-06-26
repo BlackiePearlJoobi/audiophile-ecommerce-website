@@ -6,6 +6,12 @@
   font-weight: 300 700;
 }
 
+@media (min-width: 1024px) {
+  .product-card:nth-child(even) {
+    flex-direction: row-reverse;
+  }
+}
+
 :root {
   --font-primary: "Manrope", sans-serif;
   font-size: 15px;

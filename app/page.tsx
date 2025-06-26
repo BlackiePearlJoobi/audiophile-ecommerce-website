@@ -6,7 +6,7 @@ import BestGear from "./components/BestGear";
 export default function Home() {
   return (
     <>
-      <hr className="z-1 w-full border-0 h-[1px] bg-[var(--white)] opacity-10 mx-auto sm:w-[calc(100%-80px)] lg:w-[calc(100%-330px)]" />
+      <hr className="z-1 w-full border-0 h-[1px] bg-[var(--white)]/10 mx-auto sm:w-[calc(100%-80px)] lg:w-[calc(100%-330px)]" />
       <div className="bg-[url('/assets/home/mobile/image-header.jpg')] bg-cover bg-center w-full h-screen -mt-[89px] flex flex-col sm:bg-[url('/assets/home/tablet/image-header.jpg')] sm:h-[729px] lg:bg-[url('/assets/home/desktop/image-hero.jpg')]">
         <div className="absolute mt-[45px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full px-[24px] flex flex-col items-center sm:static sm:translate-x-0 sm:translate-y-0 sm:max-w-[379px] sm:px-0 sm:mx-auto sm:mt-[216px] lg:max-w-[398px] lg:ml-[165px] lg:mt-[225px] lg:items-start">
           <span className="text-[14px] leading-[var(--line-height-regular-14)] tracking-[var(--letter-spacing-regular-14)] font-[var(--font-weight-regular)] text-[var(--white)] opacity-50 mb-[16px] sm:mb-[24px]">
@@ -15,12 +15,12 @@ export default function Home() {
           <h1 className="text-[36px] leading-[var(--line-height-bold-36)] tracking-[var(--letter-spacing-bold-36)] font-[var(--font-weight-bold)] text-[var(--white)] mb-[24px] text-center sm:text-[56px] sm:leading-[var(--line-height-bold-56)] sm:tracking-[var(--letter-spacing-bold-56)] lg:text-start">
             XX99 MARK II HEADPHONES
           </h1>
-          <p className="text-[15px] leading-[var(--line-height-medium-15)] tracking-[var(--letter-spacing-medium-15)] font-[var(--font-weight-medium)] text-[var(--white)] opacity-75 text-center sm:mx-[15px] mb-[29px] sm:mb-[40px] lg:text-start lg:ml-0 lg:mr-[30px]">
+          <p className="text-[15px] leading-[var(--line-height-medium-15)] tracking-[var(--letter-spacing-medium-15)] font-[var(--font-weight-medium)] text-[var(--white)]/75 text-center sm:mx-[15px] mb-[29px] sm:mb-[40px] lg:text-start lg:ml-0 lg:mr-[30px]">
             Experience natural, lifelike audio and exceptional build quality
             made for the passionate music enthusiast.
           </p>
           <Link
-            href="/headphones/xx99-mark-2"
+            href="/headphones/xx99-mark-two-headphones"
             className="text-[13px] leading-[var(--line-height-bold-13)] tracking-[var(--letter-spacing-bold-13)] font-[var(--font-weight-bold)] text-[var(--white)] bg-[var(--dark-orange)] hover:bg-[var(--orange)] w-[160px] h-[48px] flex items-center justify-center"
           >
             SEE PRODUCT
@@ -31,7 +31,7 @@ export default function Home() {
         <div className="mt-[8px] mb-[85px] sm:mt-[40px] sm:mb-[29px] lg:mt-[64px] lg:mb-[101px]">
           <Categories></Categories>
         </div>
-        <section className="mx-[24px] mb-[120px] flex flex-col gap-[24px] sm:mx-[40px] sm:gap-[32px] lg:mx-[165px] lg:gap-[48px]">
+        <section className="mx-[24px] mb-[120px] flex flex-col gap-[24px] sm:mx-[40px] sm:mb-[96px] sm:gap-[32px] lg:mx-[165px] lg:mb-[200px] lg:gap-[48px]">
           <article className="relative h-[600px] bg-[var(--dark-orange)] rounded-[8px] flex flex-col items-center overflow-hidden sm:h-[720px] xl:h-[560px]">
             <Image
               src="/assets/home/desktop/pattern-circles.svg"
@@ -64,7 +64,7 @@ export default function Home() {
               <h1 className="text-[36px] leading-[var(--line-height-bold-36)] tracking-[var(--letter-spacing-bold-36)] font-[var(--font-weight-bold)] text-[var(--white)] text-center min-h-[80px] mx-[24px] mb-[24px] sm:text-[56px] sm:leading-[var(--line-height-bold-56)] sm:tracking-[var(--letter-spacing-bold-56)] sm:min-h-[116px] sm:mx-0 xl:text-start">
                 ZX9<br></br>SPEAKER
               </h1>
-              <p className="text-[15px] leading-[var(--line-height-medium-15)] font-[var(--font-weight-medium)] text-[var(--white)] opacity-75 mx-[24px] mb-[24px] text-center sm:mx-0 sm:mb-[40px] xl:text-start">
+              <p className="text-[15px] leading-[var(--line-height-medium-15)] font-[var(--font-weight-medium)] text-[var(--white)]/75 mx-[24px] mb-[24px] text-center sm:mx-0 sm:mb-[40px] xl:text-start">
                 Upgrade to premium speakers that are phenomenally built to
                 deliver truly remarkable sound.
               </p>
@@ -81,7 +81,7 @@ export default function Home() {
               ZX7 SPEAKER
             </h1>
             <Link
-              href="/speakers/zx9-speaker"
+              href="/speakers/zx7-speaker"
               className="text-[13px] leading-[var(--line-height-bold-13)] tracking-[var(--letter-spacing-bold-13)] font-[var(--font-weight-bold)] text-[var(--black)] border border-black border-solid hover:text-[var(--white)] hover:bg-[var(--black)] w-[160px] h-[48px] flex items-center justify-center"
             >
               SEE PRODUCT
