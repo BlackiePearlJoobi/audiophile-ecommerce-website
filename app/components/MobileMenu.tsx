@@ -53,7 +53,7 @@ const MobileMenu = () => {
       `}
       >
         <div
-          className={`absolute top-0 left-0 w-full overflow-hidden transition-[max-height] duration-500 ease-in-out ${isMenuOpened ? "max-h-[750px]" : "max-h-0"}`}
+          className={`absolute top-0 left-0 w-full pt-[32px] pb-[35px] bg-[var(--white)] overflow-hidden transition-[max-height] duration-500 ease-in-out ${isMenuOpened ? "max-h-[750px]" : "max-h-0"} sm:pt-[56px] sm:pb-[67px]`}
         >
           <Categories></Categories>
         </div>

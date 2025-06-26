@@ -24,10 +24,7 @@ const CategoryPage = async ({ params }: { params: { category: string } }) => {
     { category: "earphones" }
   ] */
   const validCategories = validParams.map((param) => param.category);
-
-  if (!validCategories.includes(params.category)) {
-    notFound();
-  }
+  if (!validCategories.includes(params.category)) notFound();
 
   const products: Product[] = await getProducts();
 

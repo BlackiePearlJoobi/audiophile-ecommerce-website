@@ -1,4 +1,4 @@
-import { PrismaClient } from "../app/generated/prisma";
+import { PrismaClient } from "./generated/prisma";
 import products from "./data.json";
 
 const prisma = new PrismaClient();
@@ -41,6 +41,7 @@ async function seedProducts() {
         others: {
           create: product.others.map((related) => ({
             slug: related.slug,
+            category: related.category,
             name: related.name,
             mobile: related.image.mobile,
             tablet: related.image.tablet,
@@ -71,17 +72,7 @@ export async function getProducts() {
     include: {
       // define which relations to include
       category: true,
-      image: true,
       categoryImage: true,
-      gallery: {
-        include: {
-          first: true,
-          second: true,
-          third: true,
-        },
-      },
-      includes: true,
-      others: true,
     },
   });
 }
@@ -92,9 +83,29 @@ export async function getProduct(slug: string) {
     include: {
       category: true,
       image: true,
-      gallery: true,
-      includes: true,
-      others: true,
+      gallery: {
+        include: {
+          first: true,
+          second: true,
+          third: true,
+        },
+      },
+      includes: {
+        select: {
+          quantity: true,
+          item: true,
+        },
+      },
+      others: {
+        select: {
+          slug: true,
+          category: true,
+          name: true,
+          mobile: true,
+          tablet: true,
+          desktop: true,
+        },
+      },
     },
   });
 }

@@ -9,7 +9,7 @@ export default function CategoryLayout({
   return (
     <>
       {children}
-      <div className="-mt-[32px] mb-[85px] sm:-mt-[52px] sm:mb-[53px] lg:mb-[93px]">
+      <div className="mb-[120px] lg:mb-[93px]">
         <Categories></Categories>
       </div>
       <div className="lg:-mb-[40px]">

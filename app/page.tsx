@@ -28,7 +28,7 @@ export default function Home() {
         </div>
       </div>
       <main>
-        <div className="mt-[8px] mb-[85px] sm:mt-[40px] sm:mb-[29px] lg:mt-[64px] lg:mb-[101px]">
+        <div className="mt-[40px] mb-[120px] sm:my-[96px] lg:mt-[120px] lg:mb-[168px]">
           <Categories></Categories>
         </div>
         <section className="mx-[24px] mb-[120px] flex flex-col gap-[24px] sm:mx-[40px] sm:mb-[96px] sm:gap-[32px] lg:mx-[165px] lg:mb-[200px] lg:gap-[48px]">
