@@ -63,7 +63,7 @@ const CategoryPage = async ({ params }: { params: { category: string } }) => {
                     width={327}
                     height={352}
                     alt="category image"
-                    className="w-full rounded-[8px] object-cover sm:w-[689px] sm:h-[352px] lg:w-auto lg:h-auto 2xl:w-[540px] 2xl:h-[560px]"
+                    className="w-full rounded-[8px] object-cover sm:w-[689px] sm:h-[352px] lg:w-auto lg:h-auto"
                   ></Image>
                 </picture>
               )}

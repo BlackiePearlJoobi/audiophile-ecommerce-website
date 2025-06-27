@@ -123,7 +123,7 @@ const ProductPage = async ({
             <h2 className="text-[24px] leading-[36px] tracking-[0.86px] font-[var(--font-weight-bold)] text-[var(--black)] sm:text-[32px] sm:tracking-[var(--letter-spacing-bold-32)] sm:w-[339px]">
               IN THE BOX
             </h2>
-            <ol className="flex flex-col gap-[8px] sm:w-[199px]">
+            <ol className="flex flex-col gap-[8px] sm:w-[199px] lg:w-[225px]">
               {product.includes.map((accessory) => {
                 return (
                   <li key={accessory.item} className="relative">

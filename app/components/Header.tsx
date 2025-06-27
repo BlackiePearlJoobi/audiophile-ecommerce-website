@@ -18,7 +18,7 @@ const Header = () => {
       <div className="lg:hidden">
         <MobileMenu></MobileMenu>
       </div>
-      <Link href="/" className="sm:ml-[42px] lg:ml-0">
+      <Link href="/" className="z-10 sm:ml-[42px] lg:ml-0">
         <Image
           src="/assets/shared/desktop/logo.svg"
           width={143}
@@ -26,10 +26,10 @@ const Header = () => {
           alt="company logo"
         ></Image>
       </Link>
-      <div className="hidden mx-auto lg:block">
+      <div className="hidden absolute left-[60px] w-full lg:block xl:left-0">
         <Nav></Nav>
       </div>
-      <button type="button" className="cursor-pointer sm:ml-auto">
+      <button type="button" className="z-10 cursor-pointer sm:ml-auto">
         <Image
           src="/assets/shared/desktop/icon-cart.svg"
           width={23}

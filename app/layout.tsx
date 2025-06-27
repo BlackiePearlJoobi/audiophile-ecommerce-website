@@ -23,7 +23,7 @@ export default function RootLayout({
       <body className="antialiased">
         <div className="w-full flex flex-col">
           <Header></Header>
-          {children}
+          <div className="max-w-[1400px] flex flex-col mx-auto">{children}</div>
           <Footer></Footer>
         </div>
       </body>

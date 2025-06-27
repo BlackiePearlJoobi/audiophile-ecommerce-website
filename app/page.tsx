@@ -32,15 +32,15 @@ export default function Home() {
           <Categories></Categories>
         </div>
         <section className="mx-[24px] mb-[120px] flex flex-col gap-[24px] sm:mx-[40px] sm:mb-[96px] sm:gap-[32px] lg:mx-[165px] lg:mb-[200px] lg:gap-[48px]">
-          <article className="relative h-[600px] bg-[var(--dark-orange)] rounded-[8px] flex flex-col items-center overflow-hidden sm:h-[720px] xl:h-[560px]">
+          <article className="relative h-[600px] bg-[var(--dark-orange)] rounded-[8px] flex flex-col items-center overflow-hidden sm:h-[720px] xl:h-[450px]">
             <Image
               src="/assets/home/desktop/pattern-circles.svg"
               width={558}
               height={558}
               alt="pattern circles background"
-              className="absolute z-0 -top-[121px] w-[558px] h-[558px] object-cover sm:-top-[288px] sm:w-[944px] sm:h-[944px] xl:-top-[175px] xl:-left-[200px] 2xl:-top-[36px] 2xl:-left-[149px]"
+              className="absolute z-0 -top-[121px] w-[558px] h-[558px] object-cover sm:-top-[288px] sm:w-[944px] sm:h-[944px] xl:-top-[20px] xl:-left-[115px] lg:w-[775px] lg:h-[775px]"
             ></Image>
-            <picture className="absolute z-1 top-[55px] w-auto h-[207px] sm:h-[237px] xl:w-[300px] xl:h-auto xl:top-[96px] xl:left-[117.49px] 2xl:w-[410.23px] 2xl:h-[493px]">
+            <picture className="absolute z-1 top-[55px] w-auto h-[207px] sm:h-[237px] xl:w-[320px] xl:h-auto xl:top-[76px] xl:left-[117.49px]">
               <source
                 srcSet="/assets/home/desktop/image-speaker-zx9.png"
                 media="(min-width: 1280px)"
@@ -60,7 +60,7 @@ export default function Home() {
                 alt="ZX9 Speaker"
               ></Image>
             </picture>
-            <div className="absolute top-[294px] flex flex-col items-center sm:top-[353px] sm:w-[349px] xl:top-[133px] xl:right-[10%] xl:items-start">
+            <div className="absolute top-[294px] flex flex-col items-center sm:top-[353px] sm:w-[349px] xl:top-[83px] xl:right-[90px] xl:items-start">
               <h1 className="text-[36px] leading-[var(--line-height-bold-36)] tracking-[var(--letter-spacing-bold-36)] font-[var(--font-weight-bold)] text-[var(--white)] text-center min-h-[80px] mx-[24px] mb-[24px] sm:text-[56px] sm:leading-[var(--line-height-bold-56)] sm:tracking-[var(--letter-spacing-bold-56)] sm:min-h-[116px] sm:mx-0 xl:text-start">
                 ZX9<br></br>SPEAKER
               </h1>
@@ -87,32 +87,30 @@ export default function Home() {
               SEE PRODUCT
             </Link>
           </article>
-          <article className="relative w-auto min-h-[320px] rounded-[8px] flex flex-col gap-[24px] md:flex-row md:gap-[11px] lg:gap-[30px]">
+          <article className="relative w-auto min-h-[320px] rounded-[8px] flex flex-col gap-[24px] sm:flex-row sm:gap-[11px] lg:gap-[30px]">
             <picture>
               <source
                 srcSet="/assets/home/desktop/image-earphones-yx1.jpg"
                 media="(min-width: 1024px)"
                 width={540}
                 height={320}
-                className="min-w-[540px] min-h-[320px]"
               ></source>
               <source
                 srcSet="/assets/home/tablet/image-earphones-yx1.jpg"
                 media="(min-width: 768px)"
                 width={339}
                 height={320}
-                className="max-w-[339px] max-h-[320px]"
               ></source>
               <Image
                 src="/assets/home/mobile/image-earphones-yx1.jpg"
                 width={327}
                 height={200}
                 alt="YX1 Earphones"
-                className="w-full h-full rounded-[8px] object-cover"
+                className="w-full h-full rounded-[8px] object-cover sm:w-[339px] sm:h-[320px] lg:w-[540px]"
               ></Image>
             </picture>
-            <div className="min-h-[200px] bg-[var(--gray)] rounded-[8px] flex items-center md:min-w-[339px] lg:flex-1">
-              <div className="ml-[24px] flex flex-col gap-[32px] md:ml-[41px] lg:ml-[10%] xl:ml-[12.5%] 2xl:ml-[15%]">
+            <div className="min-h-[200px] bg-[var(--gray)] rounded-[8px] flex items-center sm:min-w-[339px] sm:flex-1">
+              <div className="ml-[24px] flex flex-col gap-[32px] sm:ml-[41px] lg:ml-[12.5%]">
                 <h1 className="text-[28px] leading-[var(--line-height-bold-28)] tracking-[var(--letter-spacing-bold-28)] font-[var(--font-weight-bold)] text-[var(--black)] ">
                   YX1 EARPHONES
                 </h1>
