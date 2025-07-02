@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import MobileMenu from "./MobileMenu";
 import Nav from "./Nav";
+import Cart from "./Cart";
 
 const Header = () => {
   const pathname = usePathname();
@@ -29,14 +30,7 @@ const Header = () => {
       <div className="hidden absolute left-[60px] w-full lg:block xl:left-0">
         <Nav></Nav>
       </div>
-      <button type="button" className="z-10 cursor-pointer sm:ml-auto">
-        <Image
-          src="/assets/shared/desktop/icon-cart.svg"
-          width={23}
-          height={20}
-          alt="cart icon"
-        ></Image>
-      </button>
+      <Cart></Cart>
     </header>
   );
 };

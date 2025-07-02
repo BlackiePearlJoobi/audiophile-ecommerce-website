@@ -1,40 +1,10 @@
 import React from "react";
-import type { Prisma } from "../../generated/prisma";
 import { getProduct, generateStaticSlugParams } from "../../prisma-db";
 import { notFound } from "next/navigation";
+import type { Product, CartItem } from "@/app/types/product";
 import Image from "next/image";
 import Link from "next/link";
 import AddToCartButton from "@/app/components/AddToCartButton";
-
-type Product = Prisma.ProductGetPayload<{
-  include: {
-    category: true;
-    image: true;
-    gallery: {
-      include: {
-        first: true;
-        second: true;
-        third: true;
-      };
-    };
-    includes: {
-      select: {
-        quantity: true;
-        item: true;
-      };
-    };
-    others: {
-      select: {
-        slug: true;
-        category: true;
-        name: true;
-        mobile: true;
-        tablet: true;
-        desktop: true;
-      };
-    };
-  };
-}>;
 
 const ProductPage = async ({
   params,
@@ -50,6 +20,13 @@ const ProductPage = async ({
   if (!isValid) notFound();
 
   const product: Product = (await getProduct(params.slug)) ?? notFound();
+  const cartInfo: CartItem = {
+    id: product.id,
+    slug: product.slug,
+    name: product.name,
+    price: product.price,
+    amount: 0,
+  };
 
   return (
     <>
@@ -99,7 +76,7 @@ const ProductPage = async ({
             <span className="text-[18px] leading-[var(--line-height-bold-18)] tracking-[var(--letter-spacing-bold-18)] font-[var(--font-weight-bold)] text-[var(--black)]">
               ${product.price.toLocaleString("en-US")}
             </span>
-            <AddToCartButton></AddToCartButton>
+            <AddToCartButton product={cartInfo}></AddToCartButton>
           </article>
         </section>
         <div className="flex flex-col gap-[88px] sm:gap-[120px] xl:flex-row xl:gap-[125px]">

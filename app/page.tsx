@@ -15,7 +15,7 @@ export default function Home() {
           <h1 className="text-[36px] leading-[var(--line-height-bold-36)] tracking-[var(--letter-spacing-bold-36)] font-[var(--font-weight-bold)] text-[var(--white)] mb-[24px] text-center sm:text-[56px] sm:leading-[var(--line-height-bold-56)] sm:tracking-[var(--letter-spacing-bold-56)] lg:text-start">
             XX99 MARK II HEADPHONES
           </h1>
-          <p className="text-[15px] leading-[var(--line-height-medium-15)] tracking-[var(--letter-spacing-medium-15)] font-[var(--font-weight-medium)] text-[var(--white)]/75 text-center sm:mx-[15px] mb-[29px] sm:mb-[40px] lg:text-start lg:ml-0 lg:mr-[30px]">
+          <p className="text-[15px] leading-[var(--line-height-medium-15)] font-[var(--font-weight-medium)] text-[var(--white)]/75 text-center sm:mx-[15px] mb-[29px] sm:mb-[40px] lg:text-start lg:ml-0 lg:mr-[30px]">
             Experience natural, lifelike audio and exceptional build quality
             made for the passionate music enthusiast.
           </p>

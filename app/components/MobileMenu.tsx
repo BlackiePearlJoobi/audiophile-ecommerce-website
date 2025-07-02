@@ -48,12 +48,12 @@ const MobileMenu = () => {
         ></Image>
       </button>
       <div
-        className={`fixed z-20 top-[89px] left-0 w-full h-[calc(100svh-89px)] overflow-auto transition-opacity duration-500
+        className={`fixed z-30 top-[89px] left-0 w-full h-[calc(100svh-89px)] overflow-auto transition-opacity duration-500
     ${isMenuOpened ? "bg-[var(--black)]/40 opacity-100" : "opacity-0 pointer-events-none"}
       `}
       >
         <div
-          className={`absolute top-0 left-0 w-full pt-[32px] pb-[35px] bg-[var(--white)] overflow-hidden transition-[max-height] duration-500 ease-in-out ${isMenuOpened ? "max-h-[750px]" : "max-h-0"} sm:pt-[56px] sm:pb-[67px]`}
+          className={`w-full pt-[32px] pb-[35px] bg-[var(--white)] transition-[max-height] duration-500 ease-in-out ${isMenuOpened ? "max-h-[750px]" : "max-h-0"} sm:pt-[56px] sm:pb-[67px]`}
         >
           <Categories></Categories>
         </div>
