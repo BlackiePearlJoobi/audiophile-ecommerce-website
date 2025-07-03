@@ -42,6 +42,8 @@ const CategoryPage = async ({ params }: { params: { category: string } }) => {
           .map((product) => (
             <li
               key={product.id}
+              role="region"
+              aria-labelledby={`product-heading-${product.id}`}
               className="product-card mb-[120px] flex flex-col items-center justify-center gap-[32px] sm:gap-[52px] lg:mb-[160px] lg:flex-row lg:justify-between lg:gap-[125px]"
             >
               {product.categoryImage && (
@@ -73,7 +75,10 @@ const CategoryPage = async ({ params }: { params: { category: string } }) => {
                     NEW PRODUCT
                   </span>
                 )}
-                <h2 className="text-[28px] leading-[var(--line-height-bold-28)] tracking-[1px] font-[var(--font-weight-bold)] text-[var(--black)] px-[64px] text-center uppercase sm:text-[40px] sm:leading-[var(--line-height-bold-40)] sm:tracking-[1.43px] lg:text-start lg:px-0">
+                <h2
+                  id={`product-heading-${product.id}`}
+                  className="text-[28px] leading-[var(--line-height-bold-28)] tracking-[1px] font-[var(--font-weight-bold)] text-[var(--black)] px-[64px] text-center uppercase sm:text-[40px] sm:leading-[var(--line-height-bold-40)] sm:tracking-[1.43px] lg:text-start lg:px-0"
+                >
                   {product.name}
                 </h2>
                 <p className="text-[15px] leading-[var(--line-height-medium-15)] font-[var(--font-weight-medium)] text-[var(--black)]/50 text-center lg:text-start lg:mb-[4px]">

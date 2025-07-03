@@ -32,7 +32,7 @@ const ProductPage = async ({
     <>
       <Link
         href={`/${product.category.name}`}
-        className="text-[15px] leading-[var(--line-height-medium-15)] tracking-[var(--letter-spacing-medium-15)] font-[var(--font-weight-medium)] text-[var(--black)]/50 self-start mx-[24px] mt-[16px] mb-[24px] sm:mx-[40px] sm:mt-[33px] lg:mx-[165px] lg:mt-[79px] lg:mb-[56px]"
+        className="text-[15px] leading-[var(--line-height-medium-15)] tracking-[var(--letter-spacing-medium-15)] font-[var(--font-weight-medium)] text-[var(--black)]/50 self-start mx-[24px] mt-[16px] mb-[24px] hover:text-[var(--dark-orange)] sm:mx-[40px] sm:mt-[33px] lg:mx-[165px] lg:mt-[79px] lg:mb-[56px]"
       >
         Go Back
       </Link>
@@ -74,7 +74,7 @@ const ProductPage = async ({
               {product.description}
             </p>
             <span className="text-[18px] leading-[var(--line-height-bold-18)] tracking-[var(--letter-spacing-bold-18)] font-[var(--font-weight-bold)] text-[var(--black)]">
-              ${product.price.toLocaleString("en-US")}
+              $ {product.price.toLocaleString("en-US")}
             </span>
             <AddToCartButton product={cartInfo}></AddToCartButton>
           </article>
@@ -117,7 +117,7 @@ const ProductPage = async ({
           </section>
         </div>
         <section>
-          <h2 className="hidden">GALLERY</h2>
+          <h2 className="sr-only">GALLERY</h2>
           {product.gallery && (
             <div className="flex flex-col gap-[20px] sm:flex-row sm:gap-[18px] lg:gap-[30px]">
               <div className="flex flex-col gap-[20px] lg:gap-[32px]">

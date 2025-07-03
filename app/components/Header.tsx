@@ -27,7 +27,7 @@ const Header = () => {
           alt="company logo"
         ></Image>
       </Link>
-      <div className="hidden absolute left-[60px] w-full lg:block xl:left-0">
+      <div className="hidden absolute left-[60px] w-[calc(100%-60px)] lg:block xl:left-0">
         <Nav></Nav>
       </div>
       <Cart></Cart>
