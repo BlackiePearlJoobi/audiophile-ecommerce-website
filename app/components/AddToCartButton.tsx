@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import type { CartItem } from "../types/product";
+import type { CartItem } from "../types/definitions";
 import { useState } from "react";
 import { useCart } from "../CartContext";
 

@@ -4,7 +4,7 @@ import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useCart } from "../CartContext";
-import { FormValues } from "../types/product";
+import { FormValues } from "../types/definitions";
 import GoBackButton from "../components/GoBackButton";
 import Summary from "../components/Summary";
 import PaymentMethod from "../components/PaymentMethod";

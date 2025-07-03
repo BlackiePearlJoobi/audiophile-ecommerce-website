@@ -1,7 +1,7 @@
 import React from "react";
 import { getProduct, generateStaticSlugParams } from "../../prisma-db";
 import { notFound } from "next/navigation";
-import type { Product, CartItem } from "@/app/types/product";
+import type { Product, CartItem } from "@/app/types/definitions";
 import Image from "next/image";
 import Link from "next/link";
 import AddToCartButton from "@/app/components/AddToCartButton";

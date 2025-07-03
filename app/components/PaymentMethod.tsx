@@ -3,7 +3,7 @@
 import React from "react";
 import { useState } from "react";
 import type { UseFormRegister, FieldErrors } from "react-hook-form";
-import { FormValues } from "../types/product";
+import { FormValues } from "../types/definitions";
 import Image from "next/image";
 
 const PaymentMethod = ({
