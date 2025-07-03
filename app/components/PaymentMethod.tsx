@@ -2,9 +2,17 @@
 
 import React from "react";
 import { useState } from "react";
+import type { UseFormRegister, FieldErrors } from "react-hook-form";
+import { FormValues } from "../types/product";
 import Image from "next/image";
 
-const PaymentMethod = () => {
+const PaymentMethod = ({
+  register,
+  errors,
+}: {
+  register: UseFormRegister<FormValues>;
+  errors: FieldErrors<FormValues>;
+}) => {
   const [payWithEMoney, setPayWithEMoney] = useState(false);
   const [payInCash, setPayInCash] = useState(false);
 
@@ -14,9 +22,16 @@ const PaymentMethod = () => {
         PAYMENT DETAILS
       </legend>
       <div className="flex flex-col gap-[16px] sm:flex-row">
-        <span className="text-[12px] tracking-[-0.21px] font-[var(--font-weight-bold)] sm:w-[calc(50%-8px)]">
-          Payment Method
-        </span>
+        <div className="flex flex-row justify-between gap-[10px] sm:w-[calc(50%-8px)]">
+          <span className="text-[12px] tracking-[-0.21px] font-[var(--font-weight-bold)] sm:w-[calc(50%-8px)]">
+            Payment Method
+          </span>
+          {typeof errors.payment_method?.message === "string" && (
+            <span className="text-[12px] tracking-[-0.21px] font-[var(--font-weight-medium)] text-[var(--red)]">
+              {errors.payment_method?.message}
+            </span>
+          )}
+        </div>
         <ul className="flex flex-col gap-[16px] sm:w-[calc(50%-8px)]">
           <li className="flex flex-col gap-[9px]">
             <label
@@ -26,9 +41,10 @@ const PaymentMethod = () => {
               <input
                 type="radio"
                 id="e-money"
-                name="payment_method"
+                {...register("payment_method", {
+                  required: "Please select one of these options.",
+                })}
                 value="e-Money"
-                required
                 className="accent-[var(--dark-orange)]"
                 onClick={() => {
                   setPayWithEMoney(true);
@@ -46,9 +62,10 @@ const PaymentMethod = () => {
               <input
                 type="radio"
                 id="cash"
-                name="payment_method"
+                {...register("payment_method", {
+                  required: "Please select one of these options",
+                })}
                 value="Cash on Delivery"
-                required
                 className="accent-[var(--dark-orange)]"
                 onClick={() => {
                   setPayWithEMoney(false);
@@ -63,34 +80,58 @@ const PaymentMethod = () => {
       {payWithEMoney && (
         <ul className="mt-[32px] flex flex-col gap-[24px] sm:flex-row sm:flex-wrap sm:gap-x-[16px]">
           <li className="flex flex-col gap-[9px] sm:w-[calc(50%-8px)]">
-            <label
-              htmlFor="e_money_number"
-              className="text-[12px] tracking-[-0.21px] font-[var(--font-weight-bold)]"
-            >
-              e-Money Number
-            </label>
+            <div className="flex flex-row justify-between">
+              <label
+                htmlFor="e_money_number"
+                className="text-[12px] tracking-[-0.21px] font-[var(--font-weight-bold)]"
+              >
+                e-Money Number
+              </label>
+              {typeof errors.e_money_number?.message === "string" && (
+                <span className="text-[12px] tracking-[-0.21px] font-[var(--font-weight-medium)] text-[var(--red)]">
+                  {errors.e_money_number?.message}
+                </span>
+              )}
+            </div>
             <input
               type="text"
               id="e_money_number"
-              name="e_money_number"
+              {...register("e_money_number", {
+                required: "This is required",
+                pattern: {
+                  value: /^[0-9]{9}$/,
+                  message: "The number must be 9 digits",
+                },
+              })}
               placeholder="238521993"
-              required
               className="w-full h-[56px] px-[24px] border border-solid border-[#cfcfcf] rounded-[8px] text-[14px] tracking-[-0.25px] font-[var(--font-weight-bold)] text-[var(--black)] hover:border-[var(--dark-orange)] focus:border-[var(--dark-orange)] focus:outline-none focus:ring focus:ring-[var(--dark-orange)]"
             ></input>
           </li>
           <li className="flex flex-col gap-[9px] sm:w-[calc(50%-8px)]">
-            <label
-              htmlFor="e_money_PIN"
-              className="text-[12px] tracking-[-0.21px] font-[var(--font-weight-bold)]"
-            >
-              e-Money PIN
-            </label>
+            <div className="flex flex-row justify-between">
+              <label
+                htmlFor="e_money_PIN"
+                className="text-[12px] tracking-[-0.21px] font-[var(--font-weight-bold)]"
+              >
+                e-Money PIN
+              </label>
+              {typeof errors.e_money_PIN?.message === "string" && (
+                <span className="text-[12px] tracking-[-0.21px] font-[var(--font-weight-medium)] text-[var(--red)]">
+                  {errors.e_money_PIN?.message}
+                </span>
+              )}
+            </div>
             <input
               type="text"
               id="e_money_PIN"
-              name="e_money_PIN"
+              {...register("e_money_PIN", {
+                required: "This is required",
+                pattern: {
+                  value: /^[0-9]{4}$/,
+                  message: "The PIN must be 4 digits",
+                },
+              })}
               placeholder="6891"
-              required
               className="w-full h-[56px] px-[24px] border border-solid border-[#cfcfcf] rounded-[8px] text-[14px] tracking-[-0.25px] font-[var(--font-weight-bold)] text-[var(--black)] hover:border-[var(--dark-orange)] focus:border-[var(--dark-orange)] focus:outline-none focus:ring focus:ring-[var(--dark-orange)]"
             ></input>
           </li>

@@ -1,16 +1,47 @@
 "use client";
 
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useForm } from "react-hook-form";
 import { useCart } from "../CartContext";
+import { FormValues } from "../types/product";
 import GoBackButton from "../components/GoBackButton";
 import Summary from "../components/Summary";
 import PaymentMethod from "../components/PaymentMethod";
 import Confirmation from "../components/Confirmation";
+import USStates from "../components/USStates";
 
 const Checkout = () => {
   const { clearCart } = useCart();
+  const formRef = useRef<HTMLFormElement>(null);
   const [orderConfirmed, setOrderConfirmed] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm<FormValues>();
+
+  const formatPhone = (value: string) => {
+    const digits = value.replace(/\D/g, "").slice(0, 10); // allow only 10 digits
+    const len = digits.length;
+
+    if (len === 0) return "";
+    if (len <= 3) return `(${digits}`;
+    if (len <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)} ${digits.slice(6)}`;
+  };
+
+  // submit function (prop) passed to <Summary>'s payment button
+  const submitOrder = () => {
+    formRef.current?.requestSubmit();
+  };
+
+  // show the confirmation modal (everything validated at this point)
+  const onSubmit = () => {
+    setOrderConfirmed(true);
+  };
 
   useEffect(() => {
     if (orderConfirmed) {
@@ -30,9 +61,9 @@ const Checkout = () => {
       <GoBackButton></GoBackButton>
       <main className="mb-[97px] flex flex-col gap-[32px] sm:mb-[116px] lg:mb-[141px] xl:flex-row xl:gap-[32px]">
         <form
-          action=""
-          method=""
+          ref={formRef}
           className="mx-[24px] px-[24px] pt-[24px] pb-[31px] bg-[var(--white)] rounded-[8px] flex flex-col gap-[32px] sm:mx-[40px] sm:px-[27px] sm:py-[30px] sm:gap-[41px] lg:mx-[165px] xl:mr-0 xl:px-[48px] xl:pt-[54px] xl:pb-[48px] xl:flex-5"
+          onSubmit={handleSubmit(onSubmit)}
         >
           <h1 className="text-[28px] leading-[var(--line-height-bold-28)] tracking-[1px] font-[var(--font-weight-bold)] text-[var(--black)] sm:text-[32px] sm:leading-[var(--line-height-bold-32)] sm:tracking-[var(--letter-spacing-bold-32)]">
             CHECKOUT
@@ -43,53 +74,94 @@ const Checkout = () => {
             </legend>
             <ul className="flex flex-col gap-[24px] sm:flex-row sm:flex-wrap sm:gap-x-[16px]">
               <li className="flex flex-col gap-[9px] sm:w-[calc(50%-8px)]">
-                <label
-                  htmlFor="name"
-                  className="text-[12px] tracking-[-0.21px] font-[var(--font-weight-bold)]"
-                >
-                  Name
-                </label>
+                <div className="flex flex-row justify-between">
+                  <label
+                    htmlFor="name"
+                    className="text-[12px] tracking-[-0.21px] font-[var(--font-weight-bold)]"
+                  >
+                    Name
+                  </label>
+                  {typeof errors.name?.message === "string" && (
+                    <span className="text-[12px] tracking-[-0.21px] font-[var(--font-weight-medium)] text-[var(--red)]">
+                      {errors.name?.message}
+                    </span>
+                  )}
+                </div>
                 <input
                   type="text"
                   id="name"
-                  name="name"
+                  {...register("name", {
+                    required: "This is required",
+                  })}
                   autoComplete="name"
                   placeholder="Alexei Ward"
-                  required
                   className="w-full h-[56px] px-[24px] border border-solid border-[#cfcfcf] rounded-[8px] text-[14px] tracking-[-0.25px] font-[var(--font-weight-bold)] text-[var(--black)] hover:border-[var(--dark-orange)] focus:border-[var(--dark-orange)] focus:outline-none focus:ring focus:ring-[var(--dark-orange)]"
                 ></input>
               </li>
               <li className="flex flex-col gap-[9px] sm:w-[calc(50%-8px)]">
-                <label
-                  htmlFor="mail"
-                  className="text-[12px] tracking-[-0.21px] font-[var(--font-weight-bold)]"
-                >
-                  Email Address
-                </label>
+                <div className="flex flex-row justify-between">
+                  <label
+                    htmlFor="mail"
+                    className="text-[12px] tracking-[-0.21px] font-[var(--font-weight-bold)]"
+                  >
+                    Email Address
+                  </label>
+                  {typeof errors.email?.message === "string" && (
+                    <span className="text-[12px] tracking-[-0.21px] font-[var(--font-weight-medium)] text-[var(--red)]">
+                      {errors.email?.message}
+                    </span>
+                  )}
+                </div>
                 <input
                   type="email"
                   id="mail"
-                  name="email"
+                  {...register("email", {
+                    required: "This is required",
+                    pattern: {
+                      value: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*\.\w{2,}$/i,
+                      message: "Wrong format",
+                    },
+                  })}
                   autoComplete="email"
                   placeholder="alexei@mail.com"
-                  required
                   className="w-full h-[56px] px-[24px] border border-solid border-[#cfcfcf] rounded-[8px] text-[14px] tracking-[-0.25px] font-[var(--font-weight-bold)] text-[var(--black)] hover:border-[var(--dark-orange)] focus:border-[var(--dark-orange)] focus:outline-none focus:ring focus:ring-[var(--dark-orange)]"
                 ></input>
               </li>
               <li className="flex flex-col gap-[9px] sm:w-[calc(50%-8px)]">
-                <label
-                  htmlFor="phone"
-                  className="text-[12px] tracking-[-0.21px] font-[var(--font-weight-bold)]"
-                >
-                  Phone Number
-                </label>
+                <div className="flex flex-row justify-between">
+                  <label
+                    htmlFor="phone"
+                    className="text-[12px] tracking-[-0.21px] font-[var(--font-weight-bold)]"
+                  >
+                    Phone Number
+                  </label>
+                  {typeof errors.phone_number?.message === "string" && (
+                    <span className="text-[12px] tracking-[-0.21px] font-[var(--font-weight-medium)] text-[var(--red)]">
+                      {errors.phone_number?.message}
+                    </span>
+                  )}
+                </div>
                 <input
                   type="tel"
                   id="phone"
-                  name="phone_number"
+                  {...register("phone_number", {
+                    required: "This is required",
+                    pattern: {
+                      value: /^\(\d{3}\) \d{3} \d{4}$/,
+                      message: "Wrong format",
+                    },
+                    // Live formatting
+                    // Respect user backspace — so they can delete chars without re-injection immediately
+                    onChange: (e) => {
+                      const prev = e.target.value;
+                      const next = formatPhone(prev);
+                      if (next !== prev) {
+                        setValue("phone_number", next);
+                      }
+                    },
+                  })}
                   autoComplete="tel"
-                  placeholder="+1(202)555-0136"
-                  required
+                  placeholder="(202) 555-0136"
                   className="w-full h-[56px] px-[24px] border border-solid border-[#cfcfcf] rounded-[8px] text-[14px] tracking-[-0.25px] font-[var(--font-weight-bold)] text-[var(--black)] hover:border-[var(--dark-orange)] focus:border-[var(--dark-orange)] focus:outline-none focus:ring focus:ring-[var(--dark-orange)]"
                 ></input>
               </li>
@@ -101,19 +173,27 @@ const Checkout = () => {
             </legend>
             <ul className="flex flex-col gap-[24px] sm:flex-row sm:flex-wrap sm:gap-x-[16px]">
               <li className="flex flex-col gap-[9px] sm:w-full">
-                <label
-                  htmlFor="street"
-                  className="text-[12px] tracking-[-0.21px] font-[var(--font-weight-bold)]"
-                >
-                  Your Address
-                </label>
+                <div className="flex flex-row justify-between">
+                  <label
+                    htmlFor="street"
+                    className="text-[12px] tracking-[-0.21px] font-[var(--font-weight-bold)]"
+                  >
+                    Your Address
+                  </label>
+                  {typeof errors.street?.message === "string" && (
+                    <span className="text-[12px] tracking-[-0.21px] font-[var(--font-weight-medium)] text-[var(--red)]">
+                      {errors.street?.message}
+                    </span>
+                  )}
+                </div>
                 <input
                   type="text"
                   id="street"
-                  name="street"
+                  {...register("street", {
+                    required: "This is required",
+                  })}
                   autoComplete="street-address"
                   placeholder="1137 Williams Avenue"
-                  required
                   className="w-full h-[56px] px-[24px] border border-solid border-[#cfcfcf] rounded-[8px] text-[14px] tracking-[-0.25px] font-[var(--font-weight-bold)] text-[var(--black)] hover:border-[var(--dark-orange)] focus:border-[var(--dark-orange)] focus:outline-none focus:ring focus:ring-[var(--dark-orange)]"
                 ></input>
               </li>
@@ -134,112 +214,90 @@ const Checkout = () => {
                 ></input>
               </li>
               <li className="flex flex-col gap-[9px] sm:w-[calc(50%-8px)]">
-                <label
-                  htmlFor="city"
-                  className="text-[12px] tracking-[-0.21px] font-[var(--font-weight-bold)]"
-                >
-                  City
-                </label>
+                <div className="flex flex-row justify-between">
+                  <label
+                    htmlFor="city"
+                    className="text-[12px] tracking-[-0.21px] font-[var(--font-weight-bold)]"
+                  >
+                    City
+                  </label>
+                  {typeof errors.city?.message === "string" && (
+                    <span className="text-[12px] tracking-[-0.21px] font-[var(--font-weight-medium)] text-[var(--red)]">
+                      {errors.city?.message}
+                    </span>
+                  )}
+                </div>
                 <input
                   type="text"
                   id="city"
-                  name="city"
+                  {...register("city", {
+                    required: "This is required",
+                  })}
                   autoComplete="address-level2"
                   placeholder="New York"
-                  required
                   className="w-full h-[56px] px-[24px] border border-solid border-[#cfcfcf] rounded-[8px] text-[14px] tracking-[-0.25px] font-[var(--font-weight-bold)] text-[var(--black)] hover:border-[var(--dark-orange)] focus:border-[var(--dark-orange)] focus:outline-none focus:ring focus:ring-[var(--dark-orange)]"
                 ></input>
               </li>
               <li className="flex flex-col gap-[9px] sm:w-[calc(50%-8px)]">
-                <label
-                  htmlFor="state"
-                  className="text-[12px] tracking-[-0.21px] font-[var(--font-weight-bold)]"
-                >
-                  State / Province
-                </label>
+                <div className="flex flex-row justify-between">
+                  <label
+                    htmlFor="state"
+                    className="text-[12px] tracking-[-0.21px] font-[var(--font-weight-bold)]"
+                  >
+                    State / Province
+                  </label>
+                  {typeof errors.state?.message === "string" && (
+                    <span className="text-[12px] tracking-[-0.21px] font-[var(--font-weight-medium)] text-[var(--red)]">
+                      {errors.state?.message}
+                    </span>
+                  )}
+                </div>
                 <select
                   id="state"
-                  name="state"
+                  {...register("state", {
+                    required: "This is required",
+                  })}
                   autoComplete="address-level1"
-                  required
                   className="w-full h-[56px] px-[24px] border border-solid border-[#cfcfcf] rounded-[8px] text-[14px] tracking-[-0.25px] font-[var(--font-weight-bold)] text-[var(--black)] hover:border-[var(--dark-orange)] focus:border-[var(--dark-orange)] focus:outline-none focus:ring focus:ring-[var(--dark-orange)]"
                 >
-                  <option value="">Select a state</option>
-                  <option value="AL">Alabama</option>
-                  <option value="AK">Alaska</option>
-                  <option value="AZ">Arizona</option>
-                  <option value="AR">Arkansas</option>
-                  <option value="CA">California</option>
-                  <option value="CO">Colorado</option>
-                  <option value="CT">Connecticut</option>
-                  <option value="DE">Delaware</option>
-                  <option value="DC">District Of Columbia</option>
-                  <option value="FL">Florida</option>
-                  <option value="GA">Georgia</option>
-                  <option value="HI">Hawaii</option>
-                  <option value="ID">Idaho</option>
-                  <option value="IL">Illinois</option>
-                  <option value="IN">Indiana</option>
-                  <option value="IA">Iowa</option>
-                  <option value="KS">Kansas</option>
-                  <option value="KY">Kentucky</option>
-                  <option value="LA">Louisiana</option>
-                  <option value="ME">Maine</option>
-                  <option value="MD">Maryland</option>
-                  <option value="MA">Massachusetts</option>
-                  <option value="MI">Michigan</option>
-                  <option value="MN">Minnesota</option>
-                  <option value="MS">Mississippi</option>
-                  <option value="MO">Missouri</option>
-                  <option value="MT">Montana</option>
-                  <option value="NE">Nebraska</option>
-                  <option value="NV">Nevada</option>
-                  <option value="NH">New Hampshire</option>
-                  <option value="NJ">New Jersey</option>
-                  <option value="NM">New Mexico</option>
-                  <option value="NY">New York</option>
-                  <option value="NC">North Carolina</option>
-                  <option value="ND">North Dakota</option>
-                  <option value="OH">Ohio</option>
-                  <option value="OK">Oklahoma</option>
-                  <option value="OR">Oregon</option>
-                  <option value="PA">Pennsylvania</option>
-                  <option value="RI">Rhode Island</option>
-                  <option value="SC">South Carolina</option>
-                  <option value="SD">South Dakota</option>
-                  <option value="TN">Tennessee</option>
-                  <option value="TX">Texas</option>
-                  <option value="UT">Utah</option>
-                  <option value="VT">Vermont</option>
-                  <option value="VA">Virginia</option>
-                  <option value="WA">Washington</option>
-                  <option value="WV">West Virginia</option>
-                  <option value="WI">Wisconsin</option>
-                  <option value="WY">Wyoming</option>
+                  <USStates></USStates>
                 </select>
               </li>
               <li className="flex flex-col gap-[9px] sm:w-[calc(50%-8px)]">
-                <label
-                  htmlFor="zip"
-                  className="text-[12px] tracking-[-0.21px] font-[var(--font-weight-bold)]"
-                >
-                  ZIP Code
-                </label>
+                <div className="flex flex-row justify-between">
+                  <label
+                    htmlFor="zip"
+                    className="text-[12px] tracking-[-0.21px] font-[var(--font-weight-bold)]"
+                  >
+                    ZIP Code
+                  </label>
+                  {typeof errors.zip?.message === "string" && (
+                    <span className="text-[12px] tracking-[-0.21px] font-[var(--font-weight-medium)] text-[var(--red)]">
+                      {errors.zip?.message}
+                    </span>
+                  )}
+                </div>
                 <input
                   type="text"
                   id="zip"
-                  name="zip"
+                  {...register("zip", {
+                    required: "This is required",
+                    pattern: {
+                      value: /^[1-9]{5}(-[0-9]{4})?$/,
+                      message: "Wrong format",
+                    },
+                  })}
                   autoComplete="postal-code"
                   placeholder="10001"
-                  required
                   className="w-full h-[56px] px-[24px] border border-solid border-[#cfcfcf] rounded-[8px] text-[14px] tracking-[-0.25px] font-[var(--font-weight-bold)] text-[var(--black)] hover:border-[var(--dark-orange)] focus:border-[var(--dark-orange)] focus:outline-none focus:ring focus:ring-[var(--dark-orange)]"
                 ></input>
               </li>
             </ul>
           </fieldset>
-          <PaymentMethod></PaymentMethod>
+          <PaymentMethod register={register} errors={errors}></PaymentMethod>
+          <input type="submit" className="hidden" />
         </form>
-        <Summary></Summary>
+        <Summary submitOrder={submitOrder}></Summary>
       </main>
       {orderConfirmed && <Confirmation backToHome={backToHome}></Confirmation>}
     </div>

@@ -45,3 +45,16 @@ export type CartTotal = {
   VAT: number;
   grandTotal: number;
 };
+
+export type FormValues = {
+  name: string;
+  email: string;
+  phone_number: string;
+  street: string;
+  city: string;
+  state: string;
+  zip: string;
+  payment_method: string;
+  e_money_number: string;
+  e_money_PIN: string;
+};

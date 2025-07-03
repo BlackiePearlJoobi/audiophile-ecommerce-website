@@ -4,7 +4,11 @@ import React from "react";
 import { useCart } from "../CartContext";
 import Image from "next/image";
 
-const Summary = () => {
+interface SummaryProps {
+  submitOrder: () => void;
+}
+
+const Summary = ({ submitOrder }: SummaryProps) => {
   const { activeCartItems, cartTotal } = useCart();
 
   return (
@@ -101,6 +105,7 @@ const Summary = () => {
       <button
         type="button"
         className="text-[13px] leading-[var(--line-height-bold-13)] tracking-[var(--letter-spacing-bold-13)] font-[var(--font-weight-bold)] text-[var(--white)] bg-[var(--dark-orange)] hover:bg-[var(--orange)] w-full h-[48px] flex items-center justify-center cursor-pointer"
+        onClick={submitOrder}
       >
         CONTINUE & PAY
       </button>
