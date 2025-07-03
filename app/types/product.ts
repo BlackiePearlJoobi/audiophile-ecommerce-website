@@ -37,3 +37,11 @@ export type CartItem = {
   price: number;
   amount: number;
 };
+
+export type CartTotal = {
+  totalAmount: number;
+  totalPrice: number;
+  SHIPPING: number;
+  VAT: number;
+  grandTotal: number;
+};

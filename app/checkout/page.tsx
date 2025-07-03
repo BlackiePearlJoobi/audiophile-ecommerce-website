@@ -1,9 +1,30 @@
+"use client";
+
 import React from "react";
+import { useState, useEffect } from "react";
+import { useCart } from "../CartContext";
 import GoBackButton from "../components/GoBackButton";
 import Summary from "../components/Summary";
 import PaymentMethod from "../components/PaymentMethod";
+import Confirmation from "../components/Confirmation";
 
 const Checkout = () => {
+  const { clearCart } = useCart();
+  const [orderConfirmed, setOrderConfirmed] = useState(false);
+
+  useEffect(() => {
+    if (orderConfirmed) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+  }, [orderConfirmed]);
+
+  const backToHome = () => {
+    clearCart();
+    setOrderConfirmed(false);
+  };
+
   return (
     <div className="w-full bg-[var(--snow)]">
       <GoBackButton></GoBackButton>
@@ -220,6 +241,7 @@ const Checkout = () => {
         </form>
         <Summary></Summary>
       </main>
+      {orderConfirmed && <Confirmation backToHome={backToHome}></Confirmation>}
     </div>
   );
 };

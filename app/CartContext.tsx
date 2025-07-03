@@ -1,10 +1,12 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
-import type { CartItem } from "./types/product";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import type { CartItem, CartTotal } from "./types/product";
 
 interface CartContextType {
   cartItems: { [key: number]: CartItem };
+  activeCartItems: { [key: number]: CartItem };
+  cartTotal: CartTotal;
   updateCart: (productId: number, item: CartItem) => void;
   clearCart: () => void;
 }
@@ -12,7 +14,29 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
+  // all cart items including those whose amount is 0 (deleted from the cart)
+  // use it to edit the content of the cart
   const [cartItems, setCartItems] = useState<{ [key: number]: CartItem }>({});
+
+  // cart items whose amount is more than 0
+  // only use it to reference, do not to directly add/remove a product from it
+  const activeCartItems = useMemo(
+    () => Object.values(cartItems).filter((product) => product.amount > 0),
+    [cartItems],
+  );
+
+  const cartTotal = useMemo(() => {
+    const totalAmount = activeCartItems.reduce((sum, p) => sum + p.amount, 0);
+    const totalPrice = activeCartItems.reduce(
+      (sum, p) => sum + p.amount * p.price,
+      0,
+    );
+    const SHIPPING = totalAmount ? 50 : 0;
+    const VAT = Math.floor(totalPrice * 0.2);
+    const grandTotal = totalPrice + SHIPPING + VAT;
+
+    return { totalAmount, totalPrice, SHIPPING, VAT, grandTotal };
+  }, [activeCartItems]);
 
   // load from localStorage once on mount
   useEffect(() => {
@@ -47,7 +71,9 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <CartContext.Provider value={{ cartItems, updateCart, clearCart }}>
+    <CartContext.Provider
+      value={{ cartItems, activeCartItems, cartTotal, updateCart, clearCart }}
+    >
       {children}
     </CartContext.Provider>
   );

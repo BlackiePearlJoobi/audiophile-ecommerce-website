@@ -7,7 +7,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Cart = () => {
-  const { cartItems, updateCart, clearCart } = useCart();
+  const { cartItems, activeCartItems, cartTotal, updateCart, clearCart } =
+    useCart();
   const [isCartOpened, setIsCartOpened] = useState(false);
 
   useEffect(() => {
@@ -18,14 +19,6 @@ const Cart = () => {
     }
   }, [isCartOpened]);
 
-  let totalAmount = 0;
-  let totalPrice = 0;
-
-  Object.values(cartItems).forEach((product) => {
-    totalAmount += product.amount;
-    totalPrice += product.amount * product.price;
-  });
-
   return (
     <>
       <button
@@ -33,9 +26,9 @@ const Cart = () => {
         className="relative z-10 cursor-pointer sm:ml-auto"
         onClick={() => setIsCartOpened(!isCartOpened)}
       >
-        {totalAmount > 0 && (
+        {cartTotal.totalAmount > 0 && (
           <span className="absolute -top-[18.5px] left-[58.5%] -translate-x-1/2 text-[15px] font-[var(--font-weight-bold)] text-[var(--orange)]">
-            {totalAmount}
+            {cartTotal.totalAmount}
           </span>
         )}
         <Image
@@ -54,9 +47,9 @@ const Cart = () => {
         >
           <div className="flex flex-row justify-between">
             <h1 className="text-[18px] leading-[var(--line-height-bold-18)] tracking-[var(--letter-spacing-bold-18)] font-[var(--font-weight-bold)] text-[var(--black)]">
-              CART &#40;{totalAmount}&#41;
+              CART &#40;{cartTotal.totalAmount}&#41;
             </h1>
-            {totalAmount > 0 && (
+            {cartTotal.totalAmount > 0 && (
               <button
                 type="button"
                 className="text-[15px] leading-[var(--line-height-medium-15)] font-[var(--font-weight-medium)] text-[var(--black)]/50 underline cursor-pointer hover:text-[var(--dark-orange)]"
@@ -66,7 +59,7 @@ const Cart = () => {
               </button>
             )}
           </div>
-          {totalAmount === 0 ? (
+          {cartTotal.totalAmount === 0 ? (
             <div className="flex flex-col items-center">
               <Image
                 src="/assets/cart/empty-cart.jpg"
@@ -89,7 +82,7 @@ const Cart = () => {
           ) : (
             <>
               <ul className="my-[32px] flex flex-col gap-[24px]">
-                {Object.values(cartItems).map((product) => (
+                {Object.values(activeCartItems).map((product) => (
                   <li key={product.id} className="flex flex-row items-center">
                     <Image
                       src={`/assets/cart/image-${product.slug}.jpg`}
@@ -113,7 +106,7 @@ const Cart = () => {
                         onClick={() =>
                           updateCart(product.id, {
                             ...cartItems[product.id],
-                            amount: product.amount - 1,
+                            amount: Math.max(product.amount - 1, 0),
                           })
                         }
                       >
@@ -143,7 +136,7 @@ const Cart = () => {
                   TOTAL
                 </span>
                 <span className="text-[18px] leading-[var(--line-height-bold-18)] font-[var(--font-weight-bold)] text-[var(--black)]">
-                  $ {totalPrice.toLocaleString("en-US")}
+                  $ {cartTotal.totalPrice.toLocaleString("en-US")}
                 </span>
               </div>
               <Link
