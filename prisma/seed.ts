@@ -1,5 +1,11 @@
-import { PrismaClient } from "@/app/generated/prisma";
-import products from "@/app/data.json";
+import { PrismaClient } from "../app/generated/prisma/index.js";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __dirname = fileURLToPath(new URL(".", import.meta.url));
+const raw = readFileSync(join(__dirname, "../app/data.json"), "utf-8");
+const products = JSON.parse(raw);
 
 const prisma = new PrismaClient();
 
@@ -39,20 +45,33 @@ async function seedProducts() {
           },
         },
         includes: {
-          create: product.includes.map((item) => ({
-            quantity: item.quantity,
-            item: item.item,
-          })),
+          create: product.includes.map(
+            (item: { quantity: number; item: string }) => ({
+              quantity: item.quantity,
+              item: item.item,
+            }),
+          ),
         },
         others: {
-          create: product.others.map((related) => ({
-            slug: related.slug,
-            category: related.category,
-            name: related.name,
-            mobile: related.image.mobile,
-            tablet: related.image.tablet,
-            desktop: related.image.desktop,
-          })),
+          create: product.others.map(
+            (related: {
+              slug: string;
+              category: string;
+              name: string;
+              image: {
+                mobile: string;
+                tablet: string;
+                desktop: string;
+              };
+            }) => ({
+              slug: related.slug,
+              category: related.category,
+              name: related.name,
+              mobile: related.image.mobile,
+              tablet: related.image.tablet,
+              desktop: related.image.desktop,
+            }),
+          ),
         },
       },
     });
