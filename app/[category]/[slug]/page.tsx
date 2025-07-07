@@ -9,17 +9,19 @@ import AddToCartButton from "@/app/components/AddToCartButton";
 const ProductPage = async ({
   params,
 }: {
-  params: { category: string; slug: string };
+  params: Promise<{ category: string; slug: string }>;
 }) => {
+  const { category, slug } = await params;
+
   // URL validation
   const validParams = await generateStaticSlugParams();
   // check whether any pair in validParams matches both the category and slug from params
   const isValid = validParams.some(
-    (pair) => pair.category === params.category && pair.slug === params.slug,
+    (pair) => pair.category === category && pair.slug === slug,
   );
   if (!isValid) notFound();
 
-  const product: Product = (await getProduct(params.slug)) ?? notFound();
+  const product: Product = (await getProduct(slug)) ?? notFound();
   const cartInfo: CartItem = {
     id: product.id,
     slug: product.slug,

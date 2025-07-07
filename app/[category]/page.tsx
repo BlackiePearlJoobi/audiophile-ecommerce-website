@@ -14,7 +14,13 @@ type Product = Prisma.ProductGetPayload<{
   };
 }>;
 
-const CategoryPage = async ({ params }: { params: { category: string } }) => {
+const CategoryPage = async ({
+  params,
+}: {
+  params: Promise<{ category: string }>;
+}) => {
+  const { category } = await params;
+
   // URL validation
   const validParams = await generateStaticCategoryParams();
   // it will generate an array like:
@@ -24,7 +30,7 @@ const CategoryPage = async ({ params }: { params: { category: string } }) => {
     { category: "earphones" }
   ] */
   const validCategories = validParams.map((param) => param.category);
-  if (!validCategories.includes(params.category)) notFound();
+  if (!validCategories.includes(category)) notFound();
 
   const products: Product[] = await getProducts();
 
@@ -35,12 +41,12 @@ const CategoryPage = async ({ params }: { params: { category: string } }) => {
       </div>
       <div className="w-full h-[102px] bg-[var(--black)] flex items-center justify-center sm:h-[246px] lg:h-[239px]">
         <h1 className="text-[28px] leading-[var(--line-height-bold-28)] tracking-[var(--letter-spacing-bold-28)] font-[var(--font-weight-bold)] text-[var(--white)] uppercase sm:text-[40px] sm:leading-[var(--line-height-bold-40)] sm:tracking-[1.43px]">
-          {params.category}
+          {category}
         </h1>
       </div>
       <ul className="mx-[24px] mt-[64px] flex flex-col items-center justify-center sm:mx-[40px] sm:mt-[120px] lg:mx-[165px] lg:mt-[160px]">
         {products
-          .filter((product) => product.category.name === params.category)
+          .filter((product) => product.category.name === category)
           .map((product) => (
             <li
               key={product.id}
