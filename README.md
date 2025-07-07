@@ -1,4 +1,4 @@
-# Audiophile E-commerce Website 🛒
+# Audiophile E-commerce Website
 
 This is a fully responsive e-commerce platform for premium audio products, built with **Next.js**, **Tailwind CSS**, and **Prisma**.
 
@@ -12,7 +12,7 @@ Designed with performance, accessibility, and clean UI principles in mind, the s
 
 This project emphasizes scalability, type safety, and inclusive design practices to create an accessible and robust online storefront.
 
-## Table of contents 🗂️
+## Table of contents
 
 - [Overview](#overview)
   - [The challenge](#the-challenge)
@@ -27,9 +27,9 @@ This project emphasizes scalability, type safety, and inclusive design practices
 - [Acknowledgments](#acknowledgments)
 - [Author](#author)
 
-## Overview 🧭
+## Overview
 
-### The challenge 🔧
+### The challenge
 
 Design and implement a fully functional e-commerce platform that showcases premium audio products with an emphasis on performance, accessibility, and clean UI/UX. The goal was to simulate a real-world online storefront experience, incorporating:
 
@@ -43,7 +43,7 @@ Design and implement a fully functional e-commerce platform that showcases premi
 
 This project challenged me to balance aesthetic design with performance optimization and inclusive user experience—all while applying modular, type-safe architecture with Next.js, Tailwind CSS, and Prisma.
 
-### Screenshots 🖼️
+### Screenshots
 
 ![Screenshot - home (desktop)](public/assets/screenshots/desktop-home.jpeg)
 ![Screenshot - category page (desktop)](public/assets/screenshots/desktop-category.jpeg)
@@ -51,14 +51,14 @@ This project challenged me to balance aesthetic design with performance optimiza
 ![Screenshot - cart (tablet)](public/assets/screenshots/tablet-cart.jpeg)
 ![Screenshot - checkout (desktop)](public/assets/screenshots/desktop-checkout.jpeg)
 
-### Links 🔗
+### Links
 
 - Solution URL: [GitHub repo](https://github.com/BlackiePearlJoobi/audiophile-ecommerce-website.git)
 - Live Site URL: [Vercel]()
 
-## My process 🛤️
+## My process
 
-### Built with 🛠️
+### Built with
 
 - **Next.js** – for server-side rendering and dynamic routing
 - **TypeScript** – ensuring type safety and scalable logic
@@ -70,7 +70,7 @@ This project challenged me to balance aesthetic design with performance optimiza
 - **LocalStorage** – client-side persistence for shopping cart state
 - **Vercel** – intended deployment platform for seamless CI/CD and optimized performance
 
-### Project structure 📂
+### Project structure
 
 This project follows a modular structure leveraging **Next.js App Router**, with clear separation of concerns between layout, data, components, and styling. Below is a breakdown of key folders and files:
 
@@ -95,7 +95,7 @@ prisma/
 public/assets/ // Static image assets used throughout the site
 </pre>
 
-### Build Strategy 🧩
+### Build Strategy
 
 This project was developed with a focus on performance, accessibility, and maintainable architecture. I adopted a modular approach using **Next.js App Router**, integrating server-side rendering for product pages while managing cart state globally with the **Context API**. Key strategies included:
 
@@ -111,7 +111,7 @@ This project was developed with a focus on performance, accessibility, and maint
 
 The directory structure `app/[category]/[slug]` allows for intuitive and scalable routing. Each product category (e.g., headphones, speakers) and corresponding item pages are generated dynamically using `generateStaticCategoryParams` and `generateStaticSlugParams`, ensuring SEO benefits and clean URL architecture without hardcoding routes.
 
-Example:`prisma-db.ts`
+(Example:`prisma-db.ts`)
 
 ```ts
 // for URL validation in app/[category]
@@ -133,7 +133,7 @@ export async function generateStaticCategoryParams() {
 }
 ```
 
-Example:`app/[category]/page.tsx`
+(Example:`app/[category]/page.tsx`)
 
 ```tsx
 const CategoryPage = async ({ params }: { params: { category: string } }) => {
@@ -170,7 +170,7 @@ I chose **Prisma** for its type-safe ORM capabilities, enabling clear data model
 
 The `schema.prisma` file models relationships between entities like `Product`, `Category`, `ProductImage`, `RelatedProduct`, etc., enabling nested querying and simplified type-safe fetching throughout the app.
 
-Example:`prisma/schema.prisma`
+(Example:`prisma/schema.prisma`)
 
 ```prisma
 model Product {
@@ -226,7 +226,7 @@ To populate the database, I wrote a custom seeding script (`prisma-ts`) that par
 
 The `getProducts()` utility function encapsulates product fetching, returning server-rendered, sorted results enriched with category and image relations — used across category pages renders.
 
-Example:`app/prisma-ts`
+(Example:`app/prisma-ts`)
 
 ```ts
 import { PrismaClient } from "./generated/prisma";
@@ -309,7 +309,7 @@ export async function getProducts() {
 }
 ```
 
-Example:`app/[category]/[slug]/page.tsx`
+(Example:`app/[category]/[slug]/page.tsx`)
 
 ```tsx
 const ProductPage = async ({
@@ -372,7 +372,7 @@ This approach significantly reduced bugs, avoided data mismatches in components,
 
 To manage cart state globally, I used React’s **Context API**, wrapping the entire app inside a `<CartProvider>` in `layout.tsx`. This allowed all components — like the shopping cart, checkout summary, and order confirmation modal — to access and modify cart data without prop drilling.
 
-Example:`app/CartContext.tsx`
+(Example:`app/CartContext.tsx`)
 
 ```tsx
 "use client";
@@ -464,7 +464,7 @@ export const useCart = () => {
 };
 ```
 
-Example:`app/layout.tsx`
+(Example:`app/layout.tsx`)
 
 ```tsx
 import { CartProvider } from "./CartContext";
@@ -500,7 +500,7 @@ To persist state across sessions, I synchronized cart data with `localStorage`, 
 
 A derived state, `cartTotal`, memoizes subtotal, shipping cost, VAT, and grand total — keeping all pricing logic centralized and consistent across the cart, checkout summary, and order confirmation modal.
 
-Example:`app/components/Cart.tsx`
+(Example:`app/components/Cart.tsx`)
 
 ```tsx
 import { useCart } from "../CartContext";
@@ -574,7 +574,7 @@ Key accessibility and validation strategies included:
 
 - Grouped inputs using `<fieldset>` and `<legend>` to preserve logical structure and assistive tech semantics
 
-Example:`app/checkout/page.tsx`
+(Example:`app/checkout/page.tsx`)
 
 ```tsx
 import { useForm } from "react-hook-form";
@@ -647,7 +647,7 @@ const Checkout = () => {
 
 - Screen-reader friendly markup in the summary section, using `<table>` with offscreen `<span>` in `<h2>`, `<caption>`, and `<thead>`, as well as properly scoped headers (<th scope="row">)
 
-Example:`app/components/Summary.tsx`
+(Example:`app/components/Summary.tsx`)
 
 ```tsx
 const Summary = ({ submitOrder }: SummaryProps) => {
@@ -716,7 +716,7 @@ const Summary = ({ submitOrder }: SummaryProps) => {
 
 I also added live formatting for phone numbers via a custom `formatPhone()` utility, ensuring consistent UX while supporting manual correction and backspacing — crucial for usability.
 
-Example:`app/checkout/page.tsx`
+(Example:`app/checkout/page.tsx`)
 
 ```tsx
 const Checkout = () => {
@@ -764,7 +764,7 @@ The form is **fully keyboard-navigable**, screen reader-friendly, and respects u
 
 This approach reflects my ongoing commitment to building inclusive, human-centered interfaces that don’t compromise on performance or flexibility.
 
-### Continued Development 🔄
+### Continued Development
 
 While this project fulfills its current scope, there are several areas I plan to expand or optimize in future iterations:
 
@@ -774,7 +774,7 @@ While this project fulfills its current scope, there are several areas I plan to
 
 These improvements align with my long-term goals of building inclusive, scalable systems that prioritize real-world usability and ethical design standards.
 
-### Useful Resources 📚
+### Useful Resources
 
 - [Next.js 15 Full Tutorial Playlist – Codevolution](https://www.youtube.com/playlist?list=PLC3y8-rFHvwhIEc4I4YsRz5C7GOBnxSJY) - This comprehensive series covers everything from routing to data fetching in the App Router era. Two standout episodes that directly influenced this project:
 
@@ -786,11 +786,11 @@ These improvements align with my long-term goals of building inclusive, scalable
 
 - [An Introduction to React’s Context API – Smashing Magazine](https://www.smashingmagazine.com/2020/01/introduction-react-context-api/) - A clear, practical guide to Context API that helped shape my cart state architecture and avoid prop drilling.
 
-## Acknowledgments 🙏
+## Acknowledgments
 
 This is a solution to the [Audiophile e-commerce website challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/audiophile-ecommerce-website-C8cuSd_wx). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
-## Author ✍️
+## Author
 
 - Frontend Mentor - [@BlackiePearlJoobi](https://www.frontendmentor.io/profile/BlackiePearlJoobi)
 - devChallenges - [@Moonychan](https://devchallenges.io/profile/568d1c62-28c2-40d3-8772-cce03ae0c707)
