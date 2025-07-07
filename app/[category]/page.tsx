@@ -33,8 +33,10 @@ const CategoryPage = async ({ params }: { params: { category: string } }) => {
       <div className="z-0 w-full h-[1px] bg-[var(--black)]">
         <hr className="z-1 w-full border-t border-[var(--white)]/10 mx-auto sm:w-[calc(100%-80px)] lg:w-[calc(100%-330px)]" />
       </div>
-      <div className="text-[28px] leading-[var(--line-height-bold-28)] tracking-[var(--letter-spacing-bold-28)] font-[var(--font-weight-bold)] text-[var(--white)] bg-[var(--black)] uppercase w-full h-[102px] flex items-center justify-center sm:text-[40px] sm:leading-[var(--line-height-bold-40)] sm:tracking-[1.43px] sm:h-[246px] lg:h-[239px]">
-        <h1>{params.category}</h1>
+      <div className="w-full h-[102px] bg-[var(--black)] flex items-center justify-center sm:h-[246px] lg:h-[239px]">
+        <h1 className="text-[28px] leading-[var(--line-height-bold-28)] tracking-[var(--letter-spacing-bold-28)] font-[var(--font-weight-bold)] text-[var(--white)] uppercase sm:text-[40px] sm:leading-[var(--line-height-bold-40)] sm:tracking-[1.43px]">
+          {params.category}
+        </h1>
       </div>
       <ul className="mx-[24px] mt-[64px] flex flex-col items-center justify-center sm:mx-[40px] sm:mt-[120px] lg:mx-[165px] lg:mt-[160px]">
         {products
