@@ -4,6 +4,12 @@ import products from "./data.json";
 const prisma = new PrismaClient();
 
 async function seedProducts() {
+  const existing = await prisma.product.findFirst();
+  if (existing) {
+    console.log("Products already seeded. Skipping...");
+    return;
+  }
+
   for (const product of products) {
     await prisma.product.create({
       data: {
