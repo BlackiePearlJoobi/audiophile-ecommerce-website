@@ -6,7 +6,6 @@ import { fileURLToPath } from "node:url";
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const raw = readFileSync(join(__dirname, "../app/data.json"), "utf-8");
 const products = JSON.parse(raw);
-
 const prisma = new PrismaClient();
 
 async function seedProducts() {
