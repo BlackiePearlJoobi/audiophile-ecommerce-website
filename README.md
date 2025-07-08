@@ -104,7 +104,7 @@ This project was developed with a focus on performance, accessibility, and maint
 
 2.  Leveraging **Prisma with Neon (PostgreSQL)** for scalable, type-safe querying and seamless integration in serverless environments
 
-3.  Persisting cart data via `localStorage`, initialized through a top-level `<CartProvider>` in `layout.tsx`
+3.  Persisting cart state managed with both `localStorage` and React's `CartContext` for seamless UX across sessions
 
 4.  Using **React Hook Form** with semantic HTML and ARIA for an accessible, user-friendly checkout experience
 
