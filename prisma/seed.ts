@@ -1,10 +1,16 @@
 import { PrismaClient } from "../app/generated/prisma/index.js";
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { join } from "node:path";
+import { readFileSync } from "node:fs";
 
+// convert the current module’s URL (import.meta.url) to a file path
+// return "/home/blackiepearljoobi/frontendmentor/audiophile-ecommerce-website/prisma"
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
+
+// read the contents of ../app/data.json synchronously as UTF-8 text
+// "join" part returns: "/home/blackiepearljoobi/frontendmentor/audiophile-ecommerce-website/app/data.json"
 const raw = readFileSync(join(__dirname, "../app/data.json"), "utf-8");
+
 const products = JSON.parse(raw);
 const prisma = new PrismaClient();
 
