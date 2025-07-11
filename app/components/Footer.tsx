@@ -70,7 +70,7 @@ const Footer = () => {
             aria-label="Visit BlackiePearlJoobi's developer profile on frontendmentor.io"
             className="text-[#00bfff] hover:text-[var(--dark-orange)] visited:text-[#9370db]"
           >
-            BlackiePearlJoobi
+            Kohta Kumazaki
           </Link>
           .
         </div>
