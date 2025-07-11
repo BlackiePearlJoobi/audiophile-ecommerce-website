@@ -59,6 +59,7 @@ const Footer = () => {
           Challenge by&nbsp;
           <Link
             href="https://www.frontendmentor.io?ref=challenge"
+            target="_blank"
             aria-label="Learn more about challenges on frontendmentor.io"
             className="text-[#00bfff] hover:text-[var(--dark-orange)] visited:text-[#9370db]"
           >
@@ -67,7 +68,8 @@ const Footer = () => {
           . Coded by&nbsp;
           <Link
             href="https://www.frontendmentor.io/profile/BlackiePearlJoobi"
-            aria-label="Visit BlackiePearlJoobi's developer profile on frontendmentor.io"
+            target="_blank"
+            aria-label="Visit Kohta Kumazaki's developer profile on frontendmentor.io"
             className="text-[#00bfff] hover:text-[var(--dark-orange)] visited:text-[#9370db]"
           >
             Kohta Kumazaki
