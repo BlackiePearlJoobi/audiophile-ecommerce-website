@@ -1,6 +1,6 @@
 # Audiophile E-commerce Website
 
-This is a fully responsive e-commerce platform for premium audio products, built with **Next.js**, **Tailwind CSS**, and **Prisma**.
+This is a fully responsive e-commerce platform for premium audio products, built with **Next.js**, **Tailwind CSS**, **PostgreSQL**, **Prisma**, **React Hook Form**, **Jest**, and **React Testing Library**.
 
 Designed with performance, accessibility, and clean UI principles in mind, the site delivers a seamless and engaging shopping experience across all devices. Key features include:
 
@@ -68,6 +68,7 @@ This project challenged me to balance aesthetic design with performance optimiza
 - **React Hook Form** – streamlined form management with built-in validation and accessibility support
 - **Semantic HTML + ARIA (`role="region"`, `aria-labelledby`)** – enhancing structure and accessibility for assistive technologies
 - **LocalStorage** – client-side persistence for shopping cart state
+- **Jest + React Testing Library** - unit and integration testing for form validation, context-driven UI, and accessibility checks; includes parameterized tests for inputs and simulated user flows
 - **Vercel** – intended deployment platform for seamless CI/CD and optimized performance
 
 ### Project structure
@@ -76,6 +77,7 @@ This project follows a modular structure leveraging **Next.js App Router**, with
 
 <pre>
 app/
+├── __tests__ // Unit and integration test suite for form validation, accessibility, and UI logic
 ├── [category]/ // Dynamic routes for product categories (e.g., headphones, speakers)
 │ └── [slug]/ // Dynamic product detail pages rendered server-side
 ├── checkout/ // Checkout form with validation and order summary
@@ -93,6 +95,8 @@ prisma/
 ├── schema.prisma // Prisma schema defining PostgreSQL models and remote Neon database connection
 └── seed.ts // Seed script to populate the Neon database with initial product data
 
+__mock__/next/navigation.ts // Mock implementation of Next.js routing utilities for test isolation
+
 public/assets/ // Static image assets used throughout the site
 </pre>
 
@@ -107,6 +111,8 @@ This project was developed with a focus on performance, accessibility, and maint
 3.  Persisting cart state managed with both `localStorage` and React's `CartContext` for seamless UX across sessions
 
 4.  Using **React Hook Form** with semantic HTML and ARIA for an accessible, user-friendly checkout experience
+
+5.  Unit and integration tests via **Jest** and **React Testing Library**
 
 #### 1. Dynamic Routing with App Router
 
@@ -802,6 +808,153 @@ const Checkout = () => {
 The form is **fully keyboard-navigable**, screen reader-friendly, and respects user expectations around focus management, validation hints, and assistive labeling—all without relying on third-party UI frameworks.
 
 This approach reflects my ongoing commitment to building inclusive, human-centered interfaces that don’t compromise on performance or flexibility.
+
+#### 5. Unit and integration tests with Jest and React Testing Library
+
+This project includes a comprehensive suite of form validation tests for the checkout flow. Tests assert both failure and success scenarios using:
+
+- **Jest** for test orchestration and mocking
+
+- **React Testing Library** for DOM queries scoped by accessibility
+
+- `test.each()` for coverage across multiple input variants
+
+The confirmation modal is only rendered when `activeCartItems.length > 0`, verified via tests that simulate a valid cart state.
+
+##### Setting up
+
+- `npm install -D jest jest-environment-jsdom @testing-library/react @testing-library/dom @testing-library/jest-dom ts-node @types/jest`
+
+- `npm install --save-dev ts-jest`
+
+- `npm install --save-dev @testing-library/user-event`
+
+- `npm init jest@latest`
+
+- `jest.config.ts`
+
+```ts
+import type { Config } from "jest";
+import nextJest from "next/jest";
+
+const createJestConfig = nextJest({
+  dir: "./",
+});
+
+const config: Config = {
+  testEnvironment: "jsdom",
+  clearMocks: true,
+  collectCoverage: true,
+  collectCoverageFrom: ["app/**/*.{ts,tsx}", "!app/**/*.d.ts"],
+  coverageDirectory: "coverage",
+  setupFilesAfterEnv: ["<rootDir>/setupTests.ts"],
+  moduleNameMapper: {
+    "^@/(.*)$": "<rootDir>/$1",
+  },
+};
+
+export default createJestConfig(config);
+```
+
+- In the root directory, create `setupTests.ts` and add the following to it:
+
+```ts
+import "@testing-library/jest-dom";
+```
+
+- In `tsconfig.json`, add the following:
+
+```json
+  "compilerOptions": {
+    "types": ["jest", "@testing-library/jest-dom"],
+    "jsx": "react-jsx"
+  }
+```
+
+- In the root directory, create `__mock__/next` folders and `navigation.ts` in it, and add the following to it:
+
+```ts
+export const useRouter = () => ({
+  back: jest.fn(),
+  push: jest.fn(),
+  forward: jest.fn(),
+  replace: jest.fn(),
+  prefetch: jest.fn(),
+});
+```
+
+- then add the following at the top of test files:
+
+```tsx
+jest.mock("next/navigation", () => ({
+  useRouter: () => ({
+    back: jest.fn(),
+    push: jest.fn(),
+    forward: jest.fn(),
+    replace: jest.fn(),
+    prefetch: jest.fn(),
+  }),
+}));
+```
+
+##### Mocking CartContext in Tests
+
+To isolate checkout behaviors from global state, `CartContext` is mocked using Jest to simulate a filled cart:
+
+```tsx
+// checkout.test.tsx
+
+jest.mock("../CartContext", () => ({
+  useCart: () => ({
+    cartItems: {
+      1: { id: 1, name: "YX1 Wireless Earphones", price: 599, amount: 1 },
+    },
+    activeCartItems: [
+      { id: 1, name: "YX1 Wireless Earphones", price: 599, amount: 1 },
+    ],
+    cartTotal: {
+      totalAmount: 1,
+      totalPrice: 599,
+      SHIPPING: 50,
+      VAT: 119,
+      grandTotal: 768,
+    },
+    updateCart: jest.fn(),
+    clearCart: jest.fn(),
+  }),
+  CartProvider: ({ children }: { children: React.ReactNode }) => children,
+}));
+```
+
+This mock enables tests to:
+
+- Trigger the confirmation modal (`<Confirmation />`) only when `activeCartItems.length > 0`
+
+- Assert submission behaviors without relying on `localStorage` hydration
+
+- Spy on `updateCart` and `clearCart` when needed for interaction tests
+
+##### Format Validation Tests
+
+Robust form validation is implemented using **React Hook Form**, with coverage provided by **Jest** and **Testing Library**. Email and phone number field formats are tested dynamically using `test.each()`:
+
+```tsx
+// checkout.test.tsx
+
+test.each([
+  ["bademail@", true],
+  ["example@mail.c", true],
+  ["user.com", true],
+  ["test@example.com", false],
+])("email '%s' should %s trigger error", async (input, shouldError) => {
+  await userEvent.type(emailInput, input);
+  await userEvent.click(payButton);
+  const error = within(emailField).queryByText(/wrong format/i);
+  expect(!!error).toBe(shouldError);
+});
+```
+
+This test iterates through common failure cases and asserts whether a format error is correctly shown. It ensures consistent behavior across multiple input variants and strengthens confidence in user-facing validation logic.
 
 ### Continued Development
 

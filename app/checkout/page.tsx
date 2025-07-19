@@ -64,6 +64,7 @@ const Checkout = () => {
           ref={formRef}
           className="mx-[24px] px-[24px] pt-[24px] pb-[31px] bg-[var(--white)] rounded-[8px] flex flex-col gap-[32px] sm:mx-[40px] sm:px-[27px] sm:py-[30px] sm:gap-[41px] lg:mx-[165px] xl:mr-0 xl:px-[48px] xl:pt-[54px] xl:pb-[48px] xl:flex-5"
           onSubmit={handleSubmit(onSubmit)}
+          noValidate
         >
           <h1 className="text-[28px] leading-[var(--line-height-bold-28)] tracking-[1px] font-[var(--font-weight-bold)] text-[var(--black)] sm:text-[32px] sm:leading-[var(--line-height-bold-32)] sm:tracking-[var(--letter-spacing-bold-32)]">
             CHECKOUT
@@ -283,7 +284,7 @@ const Checkout = () => {
                   {...register("zip", {
                     required: "This is required",
                     pattern: {
-                      value: /^[1-9]{5}(-[0-9]{4})?$/,
+                      value: /^[0-9]{5}(-[0-9]{4})?$/,
                       message: "Wrong format",
                     },
                   })}
