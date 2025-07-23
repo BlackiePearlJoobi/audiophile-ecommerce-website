@@ -55,27 +55,6 @@ const Footer = () => {
             </Link>
           </div>
         </div>
-        <div className="text-[12px] text-[var(--white)] opacity-50 sm:text-[14px]">
-          Challenge by&nbsp;
-          <Link
-            href="https://www.frontendmentor.io?ref=challenge"
-            target="_blank"
-            aria-label="Learn more about challenges on frontendmentor.io"
-            className="text-[#00bfff] hover:text-[var(--dark-orange)] visited:text-[#9370db]"
-          >
-            Frontend Mentor
-          </Link>
-          . Coded by&nbsp;
-          <Link
-            href="https://www.frontendmentor.io/profile/BlackiePearlJoobi"
-            target="_blank"
-            aria-label="Visit Kohta Kumazaki's developer profile on frontendmentor.io"
-            className="text-[#00bfff] hover:text-[var(--dark-orange)] visited:text-[#9370db]"
-          >
-            Kohta Kumazaki
-          </Link>
-          .
-        </div>
       </footer>
     </div>
   );
