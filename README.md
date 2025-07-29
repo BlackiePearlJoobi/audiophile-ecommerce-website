@@ -60,13 +60,13 @@ This project challenged me to balance aesthetic design with performance optimiza
 
 ### Built with
 
-- **Next.js** – for server-side rendering and dynamic routing
-- **TypeScript** – ensuring type safety and scalable logic
+- **Semantic HTML + ARIA** – enhancing structure and accessibility for assistive technologies
 - **Tailwind CSS** – utility-first framework for responsive, accessible UI design
-- **Prisma + Neon (PostgreSQL)** – scalable, cloud-hosted database with type-safe querying and remote deployment support
+- **TypeScript** – ensuring type safety and scalable logic
 - **React (Context API, `useState`, `useEffect`)** – component-level logic and global state management
 - **React Hook Form** – streamlined form management with built-in validation and accessibility support
-- **Semantic HTML + ARIA (`role="region"`, `aria-labelledby`)** – enhancing structure and accessibility for assistive technologies
+- **Next.js** – for server-side rendering and dynamic routing
+- **Prisma + Neon (PostgreSQL)** – scalable, cloud-hosted database with type-safe querying and remote deployment support
 - **LocalStorage** – client-side persistence for shopping cart state
 - **Jest + React Testing Library** - unit and integration testing for form validation, context-driven UI, and accessibility checks; includes parameterized tests for inputs and simulated user flows
 - **Vercel** – intended deployment platform for seamless CI/CD and optimized performance
