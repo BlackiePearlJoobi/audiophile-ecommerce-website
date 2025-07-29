@@ -690,7 +690,15 @@ const Checkout = () => {
 };
 ```
 
-- Screen-reader friendly markup in the summary section, using `<table>` with offscreen `<span>` in `<h2>`, `<caption>`, and `<thead>`, as well as properly scoped headers (<th scope="row">)
+- **Accessible Semantic Markup in Summary Table** - Screen-reader-friendly structure using semantic tags and offscreen text. Key practices include:
+
+  - `<h2>` with visually hidden `<span>` for announcing "Order Summary" to assistive tech.
+
+  - `<table aria-labelledby="summary-heading">` links table context to its heading, improving screen reader navigation.
+
+  - `<caption>` and `<thead>` marked with `sr-only` to preserve semantics without visual clutter.
+
+  - Properly scoped row headers via `<th scope="row">` for meaningful cell association.
 
 (Example:`app/components/Summary.tsx`)
 
@@ -977,6 +985,8 @@ These improvements align with my long-term goals of building inclusive, scalable
 - [Tailwind CSS Cheat Sheet – Nerdcave](https://nerdcave.com/tailwind-cheat-sheet) - A handy reference for utility classes, invaluable for building responsive layouts and fine-tuning spacing and typography.
 
 - [An Introduction to React’s Context API – Smashing Magazine](https://www.smashingmagazine.com/2020/01/introduction-react-context-api/) - A clear, practical guide to Context API that helped shape my cart state architecture and avoid prop drilling.
+
+- [Testing with Jest in Next.js – Official Guide](https://nextjs.org/docs/app/guides/testing/jest) - A practical resource for setting up **Jest with the App Router**. It clarified the use of `jsdom`, custom test environments, and file mocks for server components. This guide was especially helpful for configuring modular tests around product pages and layout composition.
 
 ## Acknowledgments
 
