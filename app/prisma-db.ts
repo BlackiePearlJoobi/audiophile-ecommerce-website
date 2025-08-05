@@ -2,8 +2,13 @@ import { PrismaClient } from "./generated/prisma";
 
 const prisma = new PrismaClient();
 
-export async function getProducts() {
+export async function getProducts(category: string) {
   return prisma.product.findMany({
+    where: {
+      category: {
+        name: category,
+      },
+    },
     orderBy: [
       { price: "desc" }, // sort high to low first
       { new: "desc" }, // then place new products first

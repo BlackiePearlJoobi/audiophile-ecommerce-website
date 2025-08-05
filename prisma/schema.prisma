@@ -19,7 +19,7 @@ model Product {
   price         Int
   description   String
   features      String
-  category      Category  @relation(fields: [categoryId], references: [id])
+  category      Category  @relation(fields: [categoryId], references: [id]) // use categoryId to look up the matching Category.id, and link them as a relation.
   categoryId    Int
   image         ProductImage  @relation(fields: [imageId], references: [id])
   imageId       Int          @unique

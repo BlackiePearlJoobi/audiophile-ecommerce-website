@@ -33,7 +33,7 @@ async function seedProducts() {
         category: {
           connectOrCreate: {
             where: { name: product.category },
-            create: { name: product.category },
+            create: { name: product.category }, // id is automatically created
           },
         },
         image: {
