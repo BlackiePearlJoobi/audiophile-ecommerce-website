@@ -35,7 +35,7 @@ const Checkout = () => {
 
   // submit function (prop) passed to <Summary>'s payment button
   const submitOrder = () => {
-    formRef.current?.requestSubmit();
+    formRef.current?.requestSubmit(); // behaves as if a submit button was clicked, triggering HTML form validation before submitting
   };
 
   // show the confirmation modal (everything validated at this point)
@@ -162,7 +162,7 @@ const Checkout = () => {
                     },
                   })}
                   autoComplete="tel"
-                  placeholder="(202) 555-0136"
+                  placeholder="(202) 555 0136"
                   className="w-full h-[56px] px-[24px] border border-solid border-[#cfcfcf] rounded-[8px] text-[14px] tracking-[-0.25px] font-[var(--font-weight-bold)] text-[var(--black)] hover:border-[var(--dark-orange)] focus:border-[var(--dark-orange)] focus:outline-none focus:ring focus:ring-[var(--dark-orange)]"
                 ></input>
               </li>

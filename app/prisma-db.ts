@@ -1,6 +1,8 @@
+// This file belongs inside the app/ directory because it’s used by the app code (i.e., runtime code)
+// schema.prisma and seed.ts live in app/prisma/ because these files are never imported by the app (i.e., not runtime code)
 import { PrismaClient } from "./generated/prisma";
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient(); // Prisma Client instance generated from schema.prisma, providing typed database access
 
 export async function getProducts(category: string) {
   return prisma.product.findMany({
@@ -14,7 +16,7 @@ export async function getProducts(category: string) {
       { new: "desc" }, // then place new products first
     ],
     include: {
-      // define which relations to include
+      // define which relations to include (scalar fields like id, slug, name, price, etc., are included automatically)
       category: true,
       categoryImage: true,
     },
@@ -25,6 +27,7 @@ export async function getProduct(slug: string) {
   return prisma.product.findUnique({
     where: { slug },
     include: {
+      // define which relations to include (scalar fields like id, slug, name, price, etc., are included automatically)
       category: true,
       image: true,
       gallery: {

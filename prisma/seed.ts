@@ -3,17 +3,23 @@ import { fileURLToPath } from "node:url";
 import { join } from "node:path";
 import { readFileSync } from "node:fs";
 
-// convert the current module’s URL (import.meta.url) to a file path
-// return "/home/blackiepearljoobi/frontendmentor/audiophile-ecommerce-website/prisma"
+/* 1. Reconstructing __dirname in an ES module */
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
+// In ES modules, you must derive __dirname from the module’s URL
+// import.meta.url → something like "file:///home/.../prisma/seed.ts"
+// converts the current module’s URL (import.meta.url) to a file path
+// returns "/home/blackiepearljoobi/frontendmentor/audiophile-ecommerce-website/prisma"
 
-// read the contents of ../app/data.json synchronously as UTF-8 text
-// "join" part returns: "/home/blackiepearljoobi/frontendmentor/audiophile-ecommerce-website/app/data.json"
+/* 2. Loading seed data */
 const raw = readFileSync(join(__dirname, "../app/data.json"), "utf-8");
+// reads the contents of ../app/data.json synchronously as UTF-8 text
+// "join" part returns: "/home/blackiepearljoobi/frontendmentor/audiophile-ecommerce-website/app/data.json"
+const products = JSON.parse(raw); // turns the JSON string into a real JavaScript array of product objects
 
-const products = JSON.parse(raw);
-const prisma = new PrismaClient();
+/* 3. Connecting to DB */
+const prisma = new PrismaClient(); // Prisma Client instance generated from schema.prisma, providing typed database access
 
+/* 4. Defining the seeding function */
 async function seedProducts() {
   const existing = await prisma.product.findFirst();
   if (existing) {
@@ -32,8 +38,9 @@ async function seedProducts() {
         features: product.features,
         category: {
           connectOrCreate: {
+            // if a related record based on a where clause is found, it connects to it; otherwise, it creates a new record and connects to it automatically
             where: { name: product.category },
-            create: { name: product.category }, // id is automatically created
+            create: { name: product.category }, // id is automatically created since schema uses: id Int @id @default(autoincrement())
           },
         },
         image: {
@@ -83,10 +90,11 @@ async function seedProducts() {
   }
 }
 
+/* 5. Executing the seeding */
 seedProducts()
   .then(() => {
     console.log("Seeding complete.");
-    return prisma.$disconnect();
+    return prisma.$disconnect(); // closes the DB connection (without it, Node keeps running)
   })
   .catch((error) => {
     console.error("Error seeding:", error);

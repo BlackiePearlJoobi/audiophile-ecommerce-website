@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 // define which relations to include
-// fields like name, price, id, etc., are included automatically as part of the base Product model.
+// scalar fields like id, slug, name, price, etc., are included automatically as part of the base Product model.
 type Product = Prisma.ProductGetPayload<{
   include: {
     category: true;

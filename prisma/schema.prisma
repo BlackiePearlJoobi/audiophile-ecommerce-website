@@ -11,6 +11,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// Model = shape of one row  
+// Table = collection of rows  
+// Fields = columns inside each row (not individual cells)
 model Product {
   id            Int       @id @default(autoincrement())
   slug          String    @unique
@@ -19,16 +22,18 @@ model Product {
   price         Int
   description   String
   features      String
-  category      Category  @relation(fields: [categoryId], references: [id]) // use categoryId to look up the matching Category.id, and link them as a relation.
-  categoryId    Int
+  category      Category  @relation(fields: [categoryId], references: [id]) // use categoryId to look up the matching Category.id, and link them as a relation
+  // fields: [...] → which column stores the FK
+  // references: [...] → which column in the other model it points to
+  categoryId    Int // foreign key (Product is the owning side of the relation)
   image         ProductImage  @relation(fields: [imageId], references: [id])
   imageId       Int          @unique
-  categoryImage CategoryImage?
+  categoryImage CategoryImage? // No @relation is needed because this is the inverse side of the relation
   gallery       Gallery?
   includes      IncludeItem[]
   others        RelatedProduct[]
 
-  @@map("products")
+  @@map("products") // tells Prisma the actual SQL table name is "products" (Prisma encourages singular model names while many SQL databases use plural table names)
 }
 
 model Category {
@@ -51,7 +56,7 @@ model CategoryImage {
   tablet    String
   desktop   String
   product   Product @relation(fields: [productId], references: [id])
-  productId Int     @unique
+  productId Int     @unique // foreign key (CategoryImage is the owning side, not Product)
 }
 
 model Gallery {

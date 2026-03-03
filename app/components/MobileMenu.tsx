@@ -20,7 +20,7 @@ const MobileMenu = () => {
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      // target the closets ancestor that has the .shop-link class, letting the click originate from nested tags like <span> inside a <Link>, as long as an ancestor has the .shop-link class.
+      // target the closest ancestor that has the .shop-link class, letting the click originate from nested tags like <span> inside a <Link>, as long as an ancestor has the .shop-link class.
       if (target.closest(".shop-link")) {
         setIsMenuOpened(false);
       }
