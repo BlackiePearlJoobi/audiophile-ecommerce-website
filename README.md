@@ -16,7 +16,7 @@ This project emphasizes scalability, type safety, and inclusive design practices
 
 - [Overview](#overview)
   - [The challenge](#the-challenge)
-  - [Screenshot](#screenshot)
+  - [Screenshots](#screenshots)
   - [Links](#links)
 - [My process](#my-process)
   - [Built with](#built-with)
@@ -330,7 +330,7 @@ seedProducts()
 
 This script now seeds a Neon-hosted Postgres database via Prisma’s remote connection.
 
-(Example:`app/prisma-ts`)
+(Example:`app/prisma-db.ts`)
 
 ```ts
 import { PrismaClient } from "./generated/prisma";
@@ -995,4 +995,3 @@ This is a solution to the [Audiophile e-commerce website challenge on Frontend M
 ## Author
 
 - Frontend Mentor - [@BlackiePearlJoobi](https://www.frontendmentor.io/profile/BlackiePearlJoobi)
-- devChallenges - [@Moonychan](https://devchallenges.io/profile/568d1c62-28c2-40d3-8772-cce03ae0c707)
