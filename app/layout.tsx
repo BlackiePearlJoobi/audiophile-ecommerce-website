@@ -6,7 +6,8 @@ import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
   title: "Audiophile E-commerce Website",
-  description: "",
+  description:
+    "A Next.js e-commerce application featuring dynamic product routes, a database-driven product catalog, a global cart system, a validated checkout flow, and unit-tested core components.",
 };
 
 export const viewport: Viewport = {
