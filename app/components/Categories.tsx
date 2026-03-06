@@ -8,8 +8,8 @@ const Categories = () => {
       <div className="relative w-full h-[217px] flex flex-col items-center lg:h-[284px]">
         <Image
           src="/assets/shared/desktop/image-category-thumbnail-headphones.png"
-          width={79.92}
-          height={104}
+          width={220}
+          height={160}
           alt="category: headphones"
           className="z-2 w-[145px] h-auto lg:w-[220px] lg:h-auto"
         ></Image>
@@ -37,8 +37,8 @@ const Categories = () => {
       <div className="relative w-full h-[217px] flex flex-col items-center lg:h-[284px]">
         <Image
           src="/assets/shared/desktop/image-category-thumbnail-speakers.png"
-          width={84.04}
-          height={101}
+          width={240}
+          height={150}
           alt="category: speakers"
           className="z-2 w-[150px] h-auto lg:w-[240px] lg:h-auto"
         ></Image>
@@ -66,8 +66,8 @@ const Categories = () => {
       <div className="relative w-full h-[217px] flex flex-col items-center lg:h-[284px]">
         <Image
           src="/assets/shared/desktop/image-category-thumbnail-earphones.png"
-          width={103}
-          height={104}
+          width={260}
+          height={160}
           alt="category: earphones"
           className="z-2 w-[175px] h-auto lg:w-[260px] lg:h-auto"
         ></Image>
