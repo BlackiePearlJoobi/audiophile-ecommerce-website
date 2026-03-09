@@ -4,7 +4,7 @@ This is a fully responsive e-commerce platform for premium audio products, built
 
 Designed with performance, accessibility, and clean UI principles in mind, the site delivers a seamless and engaging shopping experience across all devices. Key features include:
 
-- **Server-side rendered product pages** backed by a scalable database
+- **Dynamically routed product pages** backed by a scalable database
 
 - A persistent **shopping cart** using `localStorage` for client-side state
 
@@ -33,7 +33,7 @@ This project emphasizes scalability, type safety, and inclusive design practices
 
 Design and implement a fully functional e-commerce platform that showcases premium audio products with an emphasis on performance, accessibility, and clean UI/UX. The goal was to simulate a real-world online storefront experience, incorporating:
 
-- **Dynamic server-side rendering** for SEO and data freshness
+- **Dynamic routing** with Next.js App Router
 
 - **Persistent cart functionality** using `localStorage`
 
@@ -102,7 +102,7 @@ public/assets/ // Static image assets used throughout the site
 
 ### Build strategy
 
-This project was developed with a focus on performance, accessibility, and maintainable architecture. I adopted a modular approach using **Next.js App Router**, integrating server-side rendering for product pages while managing cart state globally with the **Context API**. Key strategies included:
+This project was developed with a focus on performance, accessibility, and maintainable architecture. I adopted a modular approach using **Next.js App Router**, integrating dynamic routing for product pages while managing cart state globally with the **Context API**. Key strategies included:
 
 1.  Structuring routes dynamically under `app/[category]/[slug]` for clean, scalable navigation
 
