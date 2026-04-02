@@ -239,15 +239,23 @@ import { fileURLToPath } from "node:url";
 import { join } from "node:path";
 import { readFileSync } from "node:fs";
 
-// convert the current module’s URL (import.meta.url) to a file path
+/* 1. Reconstructing __dirname in an ES module */
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
+// In ES modules, you must derive __dirname from the module’s URL
+// import.meta.url → something like "file:///home/.../prisma/seed.ts"
+// converts the current module’s URL (import.meta.url) to a file path
+// returns "/home/blackiepearljoobi/frontendmentor/audiophile-ecommerce-website/prisma"
 
-// read the contents of ../app/data.json synchronously as UTF-8 text
+/* 2. Loading seed data */
 const raw = readFileSync(join(__dirname, "../app/data.json"), "utf-8");
+// reads the contents of ../app/data.json synchronously as UTF-8 text
+// "join" part returns: "/home/blackiepearljoobi/frontendmentor/audiophile-ecommerce-website/app/data.json"
+const products = JSON.parse(raw); // turns the JSON string into a real JavaScript array of product objects
 
-const products = JSON.parse(raw);
-const prisma = new PrismaClient();
+/* 3. Connecting to DB */
+const prisma = new PrismaClient(); // Prisma Client instance generated from schema.prisma, providing typed database access
 
+/* 4. Defining the seeding function */
 async function seedProducts() {
   const existing = await prisma.product.findFirst();
   if (existing) {
@@ -266,8 +274,9 @@ async function seedProducts() {
         features: product.features,
         category: {
           connectOrCreate: {
+            // if a related record based on a where clause is found, it connects to it; otherwise, it creates a new record and connects to it automatically
             where: { name: product.category },
-            create: { name: product.category },
+            create: { name: product.category }, // id is automatically created since schema uses: id Int @id @default(autoincrement())
           },
         },
         image: {
@@ -317,10 +326,11 @@ async function seedProducts() {
   }
 }
 
+/* 5. Executing the seeding */
 seedProducts()
   .then(() => {
     console.log("Seeding complete.");
-    return prisma.$disconnect();
+    return prisma.$disconnect(); // closes the DB connection (without it, Node keeps running)
   })
   .catch((error) => {
     console.error("Error seeding:", error);
@@ -335,24 +345,44 @@ This script now seeds a Neon-hosted Postgres database via Prisma’s remote conn
 ```ts
 import { PrismaClient } from "./generated/prisma";
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient(); // Prisma Client instance generated from schema.prisma, providing typed database access
 
-export async function getProducts() {
-  return prisma.product.findMany({
-    orderBy: [
-      { price: "desc" }, // sort high to low first
-      { new: "desc" }, // then place new products first
-    ],
+export async function getProduct(slug: string) {
+  return prisma.product.findUnique({
+    where: { slug },
     include: {
-      // define which relations to include
+      // define which relations to include (scalar fields like id, slug, name, price, etc., are included automatically)
       category: true,
-      categoryImage: true,
+      image: true,
+      gallery: {
+        include: {
+          first: true,
+          second: true,
+          third: true,
+        },
+      },
+      includes: {
+        select: {
+          quantity: true,
+          item: true,
+        },
+      },
+      others: {
+        select: {
+          slug: true,
+          category: true,
+          name: true,
+          mobile: true,
+          tablet: true,
+          desktop: true,
+        },
+      },
     },
   });
 }
 ```
 
-The `getProducts()` utility function encapsulates product fetching, returning server-rendered, sorted results enriched with category and image relations — used across category pages renders.
+The `getProduct()` utility function encapsulates product fetching, returning server-rendered results enriched with category, image and other relations — used across individual product pages renders.
 
 (Example:`app/[category]/[slug]/page.tsx`)
 
