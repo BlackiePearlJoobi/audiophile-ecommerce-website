@@ -11,7 +11,7 @@ interface ConfirmationProps {
 
 const Confirmation = ({ backToHome }: ConfirmationProps) => {
   const { activeCartItems, cartTotal } = useCart();
-  const product = Object.values(activeCartItems)[0];
+  const product = activeCartItems[0];
 
   return (
     product && (

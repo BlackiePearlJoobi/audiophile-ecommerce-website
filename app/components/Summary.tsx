@@ -20,7 +20,7 @@ const Summary = ({ submitOrder }: SummaryProps) => {
         <span className="sr-only">ORDER </span>SUMMARY
       </h2>
       <ul className="flex flex-col gap-[24px]">
-        {Object.values(activeCartItems).map((product) => (
+        {activeCartItems.map((product) => (
           <li key={product.id} className="flex flex-row items-center">
             <Image
               src={`/assets/cart/image-${product.slug}.jpg`}

@@ -457,7 +457,7 @@ import type { CartItem, CartTotal } from "./types/definitions";
 
 interface CartContextType {
   cartItems: { [key: number]: CartItem };
-  activeCartItems: { [key: number]: CartItem };
+  activeCartItems: CartItem[];
   cartTotal: CartTotal;
   updateCart: (productId: number, item: CartItem) => void;
   clearCart: () => void;

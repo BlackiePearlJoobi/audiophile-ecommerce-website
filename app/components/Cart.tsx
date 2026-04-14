@@ -82,7 +82,7 @@ const Cart = () => {
           ) : (
             <>
               <ul className="my-[32px] flex flex-col gap-[24px]">
-                {Object.values(activeCartItems).map((product) => (
+                {activeCartItems.map((product) => (
                   <li key={product.id} className="flex flex-row items-center">
                     <Image
                       src={`/assets/cart/image-${product.slug}.jpg`}
